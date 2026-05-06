@@ -1,0 +1,713 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A6F703F01E73C7748F873B3 /* HabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17E680F1456FFA1E8F5CA33 /* HabitsView.swift */; };
+		112B2339592D943DF5B23A8E /* FloTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */; };
+		1ABC3F44B45594F6E5043037 /* FloAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9262C97D485427344A4C25AC /* FloAnimations.swift */; };
+		1CA33E486F555D949CD84FC6 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2803732B849FFE25091E1A10 /* Note.swift */; };
+		2011DDCCE9849187D8BEB382 /* FloColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09020E6BAA0A88AE9A1E94AA /* FloColors.swift */; };
+		2181581FDF14A96D09736E15 /* FocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9202083731A26ABEB17258C3 /* FocusViewModel.swift */; };
+		21B642151ADD0DCB7D92BA06 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316C4043395BF9B4A9B2960C /* HabitViewModel.swift */; };
+		228D9E518BD7732A4A7CE823 /* DailyPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3E6CEC38E59D3EA2A9FA7C /* DailyPlannerView.swift */; };
+		27B9408A5C8AD10A444A178A /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88D71E0A84B8E45E71CC6BF /* NotesViewModel.swift */; };
+		2A738CDE51EEDD498FB2F575 /* FloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AE5D376932D4CDBDCB3B9 /* FloApp.swift */; };
+		2C4F91804854F06102EF2050 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43172803406EA8EC9EA8C52D /* Assets.xcassets */; };
+		3196E92EA0AAF87E706846E8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEFBEE99E1FB952CA1A702 /* Enums.swift */; };
+		325478C6CEBF11195357C210 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEC391D367031591AC18D79 /* Tag.swift */; };
+		32DC620F00A1517E101C5A76 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B77E3F7A1F6A3C917B1FEF6 /* TaskItem.swift */; };
+		33BD3D09B537AF2B92E6FC62 /* FloCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049BDC846DBEAD3B064E797 /* FloCard.swift */; };
+		33CCA4B39B96AC527DD2FD78 /* HabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17E680F1456FFA1E8F5CA33 /* HabitsView.swift */; };
+		3B81F31D04F13C11FF00285D /* FloProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1A1B7C62817B55AA388B0 /* FloProgressRing.swift */; };
+		3F07740C766E3184A150B38A /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */; };
+		3F278D8D44F04137BC218F41 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959508A93309DD4C55E40B2 /* FocusSession.swift */; };
+		4054F8E54B678042B5CB1918 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F4CAC06D07E29C6090E45E /* Habit.swift */; };
+		440B733E37A051B4F7ED4F44 /* FloTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD790E89CFA8C564565734D /* FloTextField.swift */; };
+		488223D2213B216E34582289 /* FloButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2CEEC246B02DCDCFA9D1C0 /* FloButton.swift */; };
+		506730091F68E98C726D55A7 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */; };
+		537E2B83BC4B4637C658B4A6 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFE3BDDDBA7A6FDF06418D1 /* TasksView.swift */; };
+		5C55682AEC2E36A0181F702E /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C6100FF9F657C235ACAA4 /* Project.swift */; };
+		6770D33C63140CF3FE3013EF /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2803732B849FFE25091E1A10 /* Note.swift */; };
+		6CCC0A837AA6AA7D6E35DE6D /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFE3BDDDBA7A6FDF06418D1 /* TasksView.swift */; };
+		6CF2FFA519700BE0C67E7735 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080A375746D6C5C88217EB4 /* ContentView.swift */; };
+		708403449EF6E5FFE495AB83 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D41F2E955CC84DC208FE7D1 /* OnboardingView.swift */; };
+		71E9DD830EC76950F361A6E8 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959508A93309DD4C55E40B2 /* FocusSession.swift */; };
+		730C61D450C00579A1A151B1 /* FloCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049BDC846DBEAD3B064E797 /* FloCard.swift */; };
+		7858FDBC9767F5E7EA81F30C /* FloTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */; };
+		7ACD7366413AC8789DEF0044 /* FocusTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E2AD0C773BDC3706CF63E /* FocusTimerView.swift */; };
+		816957AEFF91CFB8A81CEAF9 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C565C42C6FEFAE3C89451D /* NotesView.swift */; };
+		83553C1C8A6D158AE66E099E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7026D9CA18C9D74E4FC05C0D /* SettingsView.swift */; };
+		9E3002AD8D1D5C667A83ED58 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080A375746D6C5C88217EB4 /* ContentView.swift */; };
+		A2CFF73BDF620C25E4F2F6FA /* NotesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88D71E0A84B8E45E71CC6BF /* NotesViewModel.swift */; };
+		A3F8B311BABD919A731F6A10 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D053475C5DEC8B9E546812 /* OnboardingViewModel.swift */; };
+		A75E7B52968887B0CE16AB34 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEC391D367031591AC18D79 /* Tag.swift */; };
+		ABCBB73A966A9A6A03C96F19 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F4CAC06D07E29C6090E45E /* Habit.swift */; };
+		B0CCB615CE79089399558F63 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D053475C5DEC8B9E546812 /* OnboardingViewModel.swift */; };
+		B1C3C9294D8EAD3C6F36C10F /* FloProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1A1B7C62817B55AA388B0 /* FloProgressRing.swift */; };
+		B3F5B92DF4FFE5F9CCC39726 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C565C42C6FEFAE3C89451D /* NotesView.swift */; };
+		B587B50C3DA728635A348CD8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7026D9CA18C9D74E4FC05C0D /* SettingsView.swift */; };
+		C6CCF2439BE7C4C042C952F1 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BEFBEE99E1FB952CA1A702 /* Enums.swift */; };
+		CA3FA67BBF8CE484852F3FCD /* FocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9202083731A26ABEB17258C3 /* FocusViewModel.swift */; };
+		D08BDCA520BE847ADB162D3C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D41F2E955CC84DC208FE7D1 /* OnboardingView.swift */; };
+		D29916E9BAB570AB4773E010 /* FloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AE5D376932D4CDBDCB3B9 /* FloApp.swift */; };
+		D7C534342F901BB0A17BFA3E /* FloTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD790E89CFA8C564565734D /* FloTextField.swift */; };
+		D904804ED3417530ECC48612 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316C4043395BF9B4A9B2960C /* HabitViewModel.swift */; };
+		DABD5E7BCEA0BD1BAA5CACC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43172803406EA8EC9EA8C52D /* Assets.xcassets */; };
+		DD780213A881A6B99C25BB1B /* DailyPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3E6CEC38E59D3EA2A9FA7C /* DailyPlannerView.swift */; };
+		DD9F51F3B2C6C84EBFCF1F73 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C6100FF9F657C235ACAA4 /* Project.swift */; };
+		EA99F87F34A7677D9B010E33 /* FloColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09020E6BAA0A88AE9A1E94AA /* FloColors.swift */; };
+		F080F13B1CEC7E32CF58BA10 /* FloAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9262C97D485427344A4C25AC /* FloAnimations.swift */; };
+		F807FE5DBCACC0462560514E /* FloButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2CEEC246B02DCDCFA9D1C0 /* FloButton.swift */; };
+		F9E3CAB429244BA663884CB5 /* FocusTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E2AD0C773BDC3706CF63E /* FocusTimerView.swift */; };
+		FDAB0B43CB167CE7884AC1B9 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B77E3F7A1F6A3C917B1FEF6 /* TaskItem.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0049BDC846DBEAD3B064E797 /* FloCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloCard.swift; sourceTree = "<group>"; };
+		0080A375746D6C5C88217EB4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		09020E6BAA0A88AE9A1E94AA /* FloColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloColors.swift; sourceTree = "<group>"; };
+		0AFE3BDDDBA7A6FDF06418D1 /* TasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
+		0D41F2E955CC84DC208FE7D1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		0DEC391D367031591AC18D79 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		1B2CEEC246B02DCDCFA9D1C0 /* FloButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloButton.swift; sourceTree = "<group>"; };
+		2803732B849FFE25091E1A10 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		316C4043395BF9B4A9B2960C /* HabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewModel.swift; sourceTree = "<group>"; };
+		3CD790E89CFA8C564565734D /* FloTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloTextField.swift; sourceTree = "<group>"; };
+		43172803406EA8EC9EA8C52D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		46BEFBEE99E1FB952CA1A702 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		470E2AD0C773BDC3706CF63E /* FocusTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTimerView.swift; sourceTree = "<group>"; };
+		49D053475C5DEC8B9E546812 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		4B77E3F7A1F6A3C917B1FEF6 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
+		5959508A93309DD4C55E40B2 /* FocusSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSession.swift; sourceTree = "<group>"; };
+		5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		5C3E6CEC38E59D3EA2A9FA7C /* DailyPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyPlannerView.swift; sourceTree = "<group>"; };
+		5E1571CBD80EAC9E9C304C0C /* Flo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		64DE7196E3EE490289E417F2 /* Flo.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Flo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7026D9CA18C9D74E4FC05C0D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		7ED1A1B7C62817B55AA388B0 /* FloProgressRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloProgressRing.swift; sourceTree = "<group>"; };
+		9202083731A26ABEB17258C3 /* FocusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewModel.swift; sourceTree = "<group>"; };
+		9262C97D485427344A4C25AC /* FloAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloAnimations.swift; sourceTree = "<group>"; };
+		A88D71E0A84B8E45E71CC6BF /* NotesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewModel.swift; sourceTree = "<group>"; };
+		C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloTypography.swift; sourceTree = "<group>"; };
+		CB84DA015A11AC4333B16BAA /* Flo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flo.entitlements; sourceTree = "<group>"; };
+		D7C565C42C6FEFAE3C89451D /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		E62AE5D376932D4CDBDCB3B9 /* FloApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloApp.swift; sourceTree = "<group>"; };
+		EF3C6100FF9F657C235ACAA4 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		F17E680F1456FFA1E8F5CA33 /* HabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsView.swift; sourceTree = "<group>"; };
+		F7F4CAC06D07E29C6090E45E /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		360D8BACD788F8C9BB9A497F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				64DE7196E3EE490289E417F2 /* Flo.app */,
+				5E1571CBD80EAC9E9C304C0C /* Flo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3D43818E8F1616933C85B6EC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		467C92803C0A514A1ABFEFA6 /* Habits */ = {
+			isa = PBXGroup;
+			children = (
+				F17E680F1456FFA1E8F5CA33 /* HabitsView.swift */,
+			);
+			path = Habits;
+			sourceTree = "<group>";
+		};
+		4C6566325C05A1FE0A2D79F4 /* Flo */ = {
+			isa = PBXGroup;
+			children = (
+				4F8778D6F97C841B8ACEAB31 /* DesignSystem */,
+				E7CA62681C6B5678D077E189 /* Models */,
+				3D43818E8F1616933C85B6EC /* Services */,
+				65F75ABFEE4922E8AF23C63C /* ViewModels */,
+				D9D926A27032D75D6F81819D /* Views */,
+				43172803406EA8EC9EA8C52D /* Assets.xcassets */,
+				CB84DA015A11AC4333B16BAA /* Flo.entitlements */,
+				E62AE5D376932D4CDBDCB3B9 /* FloApp.swift */,
+			);
+			path = Flo;
+			sourceTree = "<group>";
+		};
+		4F8778D6F97C841B8ACEAB31 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				F710572449AB2C5FCB431974 /* Components */,
+				9262C97D485427344A4C25AC /* FloAnimations.swift */,
+				09020E6BAA0A88AE9A1E94AA /* FloColors.swift */,
+				C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		65F75ABFEE4922E8AF23C63C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				9202083731A26ABEB17258C3 /* FocusViewModel.swift */,
+				316C4043395BF9B4A9B2960C /* HabitViewModel.swift */,
+				A88D71E0A84B8E45E71CC6BF /* NotesViewModel.swift */,
+				49D053475C5DEC8B9E546812 /* OnboardingViewModel.swift */,
+				5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6A13658CC7129E4703881881 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				0AFE3BDDDBA7A6FDF06418D1 /* TasksView.swift */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+		709B2B5780DE62EBC4808039 /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+				470E2AD0C773BDC3706CF63E /* FocusTimerView.swift */,
+			);
+			path = Focus;
+			sourceTree = "<group>";
+		};
+		7712462C0DE7C2E75885DC52 = {
+			isa = PBXGroup;
+			children = (
+				4C6566325C05A1FE0A2D79F4 /* Flo */,
+				360D8BACD788F8C9BB9A497F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8C67AFD946DA51372BE3FAA3 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				D7C565C42C6FEFAE3C89451D /* NotesView.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
+		A941BEB6BB95F824401A3727 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				0D41F2E955CC84DC208FE7D1 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		C995E353E0A0CF3E334D30A9 /* Planner */ = {
+			isa = PBXGroup;
+			children = (
+				5C3E6CEC38E59D3EA2A9FA7C /* DailyPlannerView.swift */,
+			);
+			path = Planner;
+			sourceTree = "<group>";
+		};
+		D9D926A27032D75D6F81819D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				709B2B5780DE62EBC4808039 /* Focus */,
+				467C92803C0A514A1ABFEFA6 /* Habits */,
+				8C67AFD946DA51372BE3FAA3 /* Notes */,
+				A941BEB6BB95F824401A3727 /* Onboarding */,
+				C995E353E0A0CF3E334D30A9 /* Planner */,
+				F794C53DCA208BAD1C477649 /* Settings */,
+				6A13658CC7129E4703881881 /* Tasks */,
+				0080A375746D6C5C88217EB4 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E7CA62681C6B5678D077E189 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				46BEFBEE99E1FB952CA1A702 /* Enums.swift */,
+				5959508A93309DD4C55E40B2 /* FocusSession.swift */,
+				F7F4CAC06D07E29C6090E45E /* Habit.swift */,
+				2803732B849FFE25091E1A10 /* Note.swift */,
+				EF3C6100FF9F657C235ACAA4 /* Project.swift */,
+				0DEC391D367031591AC18D79 /* Tag.swift */,
+				4B77E3F7A1F6A3C917B1FEF6 /* TaskItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F710572449AB2C5FCB431974 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1B2CEEC246B02DCDCFA9D1C0 /* FloButton.swift */,
+				0049BDC846DBEAD3B064E797 /* FloCard.swift */,
+				7ED1A1B7C62817B55AA388B0 /* FloProgressRing.swift */,
+				3CD790E89CFA8C564565734D /* FloTextField.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F794C53DCA208BAD1C477649 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7026D9CA18C9D74E4FC05C0D /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0E1A6DAA615E4BDD9696A776 /* Flo_macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89E1C7E01E0E14BCCD4B8D0E /* Build configuration list for PBXNativeTarget "Flo_macOS" */;
+			buildPhases = (
+				9CA5FB37589D605D9F363489 /* Sources */,
+				265743F33390E7A45B1C7AD0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Flo_macOS;
+			packageProductDependencies = (
+			);
+			productName = Flo_macOS;
+			productReference = 5E1571CBD80EAC9E9C304C0C /* Flo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9A7E3697412A2C9DE3FBAD42 /* Flo_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A4415A4B0BBF882D1377E79 /* Build configuration list for PBXNativeTarget "Flo_iOS" */;
+			buildPhases = (
+				C339877571BF6D261D69A216 /* Sources */,
+				B91BE84E6C620FBD246AB4CA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Flo_iOS;
+			packageProductDependencies = (
+			);
+			productName = Flo_iOS;
+			productReference = 64DE7196E3EE490289E417F2 /* Flo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		00EFF76635D82281DDC46EE9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					0E1A6DAA615E4BDD9696A776 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					9A7E3697412A2C9DE3FBAD42 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 796360E4AC5843249A8786C3 /* Build configuration list for PBXProject "Flo" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 7712462C0DE7C2E75885DC52;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 360D8BACD788F8C9BB9A497F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9A7E3697412A2C9DE3FBAD42 /* Flo_iOS */,
+				0E1A6DAA615E4BDD9696A776 /* Flo_macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		265743F33390E7A45B1C7AD0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DABD5E7BCEA0BD1BAA5CACC0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B91BE84E6C620FBD246AB4CA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C4F91804854F06102EF2050 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9CA5FB37589D605D9F363489 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CF2FFA519700BE0C67E7735 /* ContentView.swift in Sources */,
+				DD780213A881A6B99C25BB1B /* DailyPlannerView.swift in Sources */,
+				C6CCF2439BE7C4C042C952F1 /* Enums.swift in Sources */,
+				F080F13B1CEC7E32CF58BA10 /* FloAnimations.swift in Sources */,
+				D29916E9BAB570AB4773E010 /* FloApp.swift in Sources */,
+				488223D2213B216E34582289 /* FloButton.swift in Sources */,
+				33BD3D09B537AF2B92E6FC62 /* FloCard.swift in Sources */,
+				2011DDCCE9849187D8BEB382 /* FloColors.swift in Sources */,
+				B1C3C9294D8EAD3C6F36C10F /* FloProgressRing.swift in Sources */,
+				D7C534342F901BB0A17BFA3E /* FloTextField.swift in Sources */,
+				112B2339592D943DF5B23A8E /* FloTypography.swift in Sources */,
+				71E9DD830EC76950F361A6E8 /* FocusSession.swift in Sources */,
+				F9E3CAB429244BA663884CB5 /* FocusTimerView.swift in Sources */,
+				2181581FDF14A96D09736E15 /* FocusViewModel.swift in Sources */,
+				ABCBB73A966A9A6A03C96F19 /* Habit.swift in Sources */,
+				D904804ED3417530ECC48612 /* HabitViewModel.swift in Sources */,
+				0A6F703F01E73C7748F873B3 /* HabitsView.swift in Sources */,
+				1CA33E486F555D949CD84FC6 /* Note.swift in Sources */,
+				816957AEFF91CFB8A81CEAF9 /* NotesView.swift in Sources */,
+				27B9408A5C8AD10A444A178A /* NotesViewModel.swift in Sources */,
+				708403449EF6E5FFE495AB83 /* OnboardingView.swift in Sources */,
+				A3F8B311BABD919A731F6A10 /* OnboardingViewModel.swift in Sources */,
+				5C55682AEC2E36A0181F702E /* Project.swift in Sources */,
+				83553C1C8A6D158AE66E099E /* SettingsView.swift in Sources */,
+				A75E7B52968887B0CE16AB34 /* Tag.swift in Sources */,
+				FDAB0B43CB167CE7884AC1B9 /* TaskItem.swift in Sources */,
+				506730091F68E98C726D55A7 /* TaskViewModel.swift in Sources */,
+				537E2B83BC4B4637C658B4A6 /* TasksView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C339877571BF6D261D69A216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9E3002AD8D1D5C667A83ED58 /* ContentView.swift in Sources */,
+				228D9E518BD7732A4A7CE823 /* DailyPlannerView.swift in Sources */,
+				3196E92EA0AAF87E706846E8 /* Enums.swift in Sources */,
+				1ABC3F44B45594F6E5043037 /* FloAnimations.swift in Sources */,
+				2A738CDE51EEDD498FB2F575 /* FloApp.swift in Sources */,
+				F807FE5DBCACC0462560514E /* FloButton.swift in Sources */,
+				730C61D450C00579A1A151B1 /* FloCard.swift in Sources */,
+				EA99F87F34A7677D9B010E33 /* FloColors.swift in Sources */,
+				3B81F31D04F13C11FF00285D /* FloProgressRing.swift in Sources */,
+				440B733E37A051B4F7ED4F44 /* FloTextField.swift in Sources */,
+				7858FDBC9767F5E7EA81F30C /* FloTypography.swift in Sources */,
+				3F278D8D44F04137BC218F41 /* FocusSession.swift in Sources */,
+				7ACD7366413AC8789DEF0044 /* FocusTimerView.swift in Sources */,
+				CA3FA67BBF8CE484852F3FCD /* FocusViewModel.swift in Sources */,
+				4054F8E54B678042B5CB1918 /* Habit.swift in Sources */,
+				21B642151ADD0DCB7D92BA06 /* HabitViewModel.swift in Sources */,
+				33CCA4B39B96AC527DD2FD78 /* HabitsView.swift in Sources */,
+				6770D33C63140CF3FE3013EF /* Note.swift in Sources */,
+				B3F5B92DF4FFE5F9CCC39726 /* NotesView.swift in Sources */,
+				A2CFF73BDF620C25E4F2F6FA /* NotesViewModel.swift in Sources */,
+				D08BDCA520BE847ADB162D3C /* OnboardingView.swift in Sources */,
+				B0CCB615CE79089399558F63 /* OnboardingViewModel.swift in Sources */,
+				DD9F51F3B2C6C84EBFCF1F73 /* Project.swift in Sources */,
+				B587B50C3DA728635A348CD8 /* SettingsView.swift in Sources */,
+				325478C6CEBF11195357C210 /* Tag.swift in Sources */,
+				32DC620F00A1517E101C5A76 /* TaskItem.swift in Sources */,
+				3F07740C766E3184A150B38A /* TaskViewModel.swift in Sources */,
+				6CCC0A837AA6AA7D6E35DE6D /* TasksView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2E4F300A167ACB64756F8B69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		46C15BACE6D504D794A16F22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Flo/Flo.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.solderg.flo;
+				PRODUCT_NAME = Flo;
+				SDKROOT = macosx;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		94CC2402120A9F09D800FE42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Flo/Flo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.solderg.flo;
+				PRODUCT_NAME = Flo;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B936324A06FEAE01325B91F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Flo/Flo.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.solderg.flo;
+				PRODUCT_NAME = Flo;
+				SDKROOT = macosx;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+			};
+			name = Debug;
+		};
+		C1CDB8814671CB8568FC5853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		EA89A988497A9AC9D760E125 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Flo/Flo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.solderg.flo;
+				PRODUCT_NAME = Flo;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		796360E4AC5843249A8786C3 /* Build configuration list for PBXProject "Flo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E4F300A167ACB64756F8B69 /* Debug */,
+				C1CDB8814671CB8568FC5853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7A4415A4B0BBF882D1377E79 /* Build configuration list for PBXNativeTarget "Flo_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94CC2402120A9F09D800FE42 /* Debug */,
+				EA89A988497A9AC9D760E125 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		89E1C7E01E0E14BCCD4B8D0E /* Build configuration list for PBXNativeTarget "Flo_macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B936324A06FEAE01325B91F0 /* Debug */,
+				46C15BACE6D504D794A16F22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 00EFF76635D82281DDC46EE9 /* Project object */;
+}
