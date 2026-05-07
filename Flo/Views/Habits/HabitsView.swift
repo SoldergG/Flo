@@ -247,6 +247,14 @@ struct AddHabitSheet: View {
     @State private var name = ""
     @State private var icon = "star.fill"
     @State private var frequency: Frequency = .daily
+    @State private var hasReminder = false
+    @State private var reminderTime = {
+        var components = Calendar.current.dateComponents([.year, .month, .day], from: .now)
+        components.hour = 9
+        components.minute = 0
+        return Calendar.current.date(from: components) ?? .now
+    }()
+    @State private var addToCalendar = false
 
     private let icons = [
         "star.fill", "heart.fill", "flame.fill", "drop.fill",
@@ -341,6 +349,59 @@ struct AddHabitSheet: View {
                                 }
                             }
                         }
+
+                        // Reminder
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle(isOn: $hasReminder.animation(FloAnimations.springSnappy)) {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "bell.fill")
+                                        .font(.system(size: 14))
+                                        .foregroundStyle(FloColors.Hex.accent)
+                                    Text("Daily Reminder")
+                                        .font(FloTypography.footnote)
+                                        .foregroundStyle(FloColors.Hex.textPrimary)
+                                }
+                            }
+                            .tint(FloColors.Hex.accent)
+
+                            if hasReminder {
+                                DatePicker(
+                                    "Reminder Time",
+                                    selection: $reminderTime,
+                                    displayedComponents: .hourAndMinute
+                                )
+                                .datePickerStyle(.compact)
+                                .font(FloTypography.footnote)
+                                .tint(FloColors.Hex.accent)
+                                .transition(.opacity.combined(with: .move(edge: .top)))
+                            }
+                        }
+                        .padding(16)
+                        .background(FloColors.Hex.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+
+                        // Add to Calendar
+                        VStack(alignment: .leading, spacing: 12) {
+                            Toggle(isOn: $addToCalendar.animation(FloAnimations.springSnappy)) {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "calendar.badge.plus")
+                                        .font(.system(size: 14))
+                                        .foregroundStyle(FloColors.Hex.success)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Add to Apple Calendar")
+                                            .font(FloTypography.footnote)
+                                            .foregroundStyle(FloColors.Hex.textPrimary)
+                                        Text("Creates recurring events automatically")
+                                            .font(FloTypography.caption2)
+                                            .foregroundStyle(FloColors.Hex.textTertiary)
+                                    }
+                                }
+                            }
+                            .tint(FloColors.Hex.accent)
+                        }
+                        .padding(16)
+                        .background(FloColors.Hex.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                     }
                     .padding(20)
                 }
@@ -355,8 +416,7 @@ struct AddHabitSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Create") {
-                        vm.addHabit(name: name, icon: icon, frequency: frequency, context: context)
-                        dismiss()
+                        createHabit()
                     }
                     .foregroundStyle(FloColors.Hex.accent)
                     .disabled(name.isEmpty)
@@ -364,5 +424,45 @@ struct AddHabitSheet: View {
             }
         }
         .presentationDetents([.large])
+    }
+
+    private func createHabit() {
+        let habit = Habit(
+            name: name,
+            icon: icon,
+            frequency: frequency,
+            reminderTime: hasReminder ? reminderTime : nil
+        )
+        context.insert(habit)
+        try? context.save()
+
+        // Schedule local notification reminder
+        if hasReminder {
+            CalendarService.scheduleHabitReminder(
+                name: name,
+                time: reminderTime,
+                habitId: habit.persistentModelID.hashValue.description
+            )
+        }
+
+        // Add to Apple Calendar
+        if addToCalendar {
+            let eventTime = hasReminder ? reminderTime : {
+                var c = Calendar.current.dateComponents([.year, .month, .day], from: .now)
+                c.hour = 9; c.minute = 0
+                return Calendar.current.date(from: c) ?? .now
+            }()
+
+            Task {
+                await CalendarService.createHabitEvent(
+                    name: name,
+                    icon: icon,
+                    reminderTime: eventTime,
+                    frequency: frequency.rawValue
+                )
+            }
+        }
+
+        dismiss()
     }
 }

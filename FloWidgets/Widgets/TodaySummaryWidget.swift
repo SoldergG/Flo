@@ -252,13 +252,7 @@ struct TodaySummaryWidgetEntryView: View {
 
 extension View {
     func widgetBackground(_ color: Color) -> some View {
-        if #available(iOS 26.0, macOS 26.0, *) {
-            return AnyView(
-                self.containerBackground(for: .widget) {
-                    color.glassEffect()
-                }
-            )
-        } else if #available(iOSApplicationExtension 17.0, macOSApplicationExtension 14.0, *) {
+        if #available(iOSApplicationExtension 17.0, macOSApplicationExtension 14.0, *) {
             return AnyView(
                 self.containerBackground(for: .widget) {
                     color

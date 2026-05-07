@@ -45,27 +45,25 @@ struct ContentView: View {
 
     #if os(iOS)
     private var iOSLayout: some View {
-        VStack(spacing: 0) {
-            TabView(selection: $selectedTab) {
-                Tab("Today", systemImage: "calendar", value: .planner) {
-                    DailyPlannerView()
-                }
-                Tab("Tasks", systemImage: "checkmark.circle", value: .tasks) {
-                    TasksHubView()
-                }
-                Tab("Focus", systemImage: "timer", value: .focus) {
-                    FocusHubView()
-                }
-                Tab("Habits", systemImage: "flame", value: .habits) {
-                    HabitsHubView()
-                }
-                Tab("Notes", systemImage: "note.text", value: .notes) {
-                    NotesView()
-                }
+        TabView(selection: $selectedTab) {
+            Tab("Today", systemImage: "calendar", value: .planner) {
+                DailyPlannerView()
             }
-            .tint(FloColors.Hex.accent)
-
-            // Banner ad for free users
+            Tab("Tasks", systemImage: "checkmark.circle", value: .tasks) {
+                TasksHubView()
+            }
+            Tab("Focus", systemImage: "timer", value: .focus) {
+                FocusHubView()
+            }
+            Tab("Habits", systemImage: "flame", value: .habits) {
+                HabitsHubView()
+            }
+            Tab("Notes", systemImage: "note.text", value: .notes) {
+                NotesView()
+            }
+        }
+        .tint(FloColors.Hex.accent)
+        .safeAreaInset(edge: .bottom) {
             if !store.isPro {
                 FloBannerAdView()
                     .transition(.move(edge: .bottom).combined(with: .opacity))

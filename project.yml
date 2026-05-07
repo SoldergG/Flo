@@ -48,6 +48,8 @@ targets:
         ENABLE_APP_SANDBOX: true
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_NSSupportsLiveActivities: true
+        INFOPLIST_KEY_NSCalendarsUsageDescription: "Flo needs calendar access to add habit reminders to your Apple Calendar."
       configs:
         Debug:
           SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG

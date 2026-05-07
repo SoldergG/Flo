@@ -33,17 +33,35 @@ final class FocusViewModel {
         isRunning = true
         isPaused = false
         startTimer()
+
+        // Start Live Activity
+        LiveActivityManager.startFocusActivity(
+            duration: selectedDuration.seconds,
+            taskName: selectedTask?.title ?? ""
+        )
     }
 
     func pauseSession() {
         isPaused = true
         timer?.invalidate()
         timer = nil
+
+        LiveActivityManager.updateFocusActivity(
+            timeRemaining: timeRemaining,
+            totalDuration: selectedDuration.seconds,
+            isPaused: true
+        )
     }
 
     func resumeSession() {
         isPaused = false
         startTimer()
+
+        LiveActivityManager.updateFocusActivity(
+            timeRemaining: timeRemaining,
+            totalDuration: selectedDuration.seconds,
+            isPaused: false
+        )
     }
 
     func stopSession(context: ModelContext) {
@@ -62,6 +80,9 @@ final class FocusViewModel {
         timeRemaining = 0
         sessionsToday += 1
 
+        // End Live Activity
+        LiveActivityManager.endFocusActivity()
+
         if completed {
             showCompleted = true
         }
@@ -73,14 +94,30 @@ final class FocusViewModel {
         isRunning = false
         isPaused = false
         timeRemaining = 0
+
+        // End Live Activity
+        LiveActivityManager.endFocusActivity()
     }
 
+    private var tickCount = 0
+
     private func startTimer() {
+        tickCount = 0
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 guard let self else { return }
                 if self.timeRemaining > 0 {
                     self.timeRemaining -= 1
+                    self.tickCount += 1
+
+                    // Update Live Activity every 5 seconds
+                    if self.tickCount % 5 == 0 {
+                        LiveActivityManager.updateFocusActivity(
+                            timeRemaining: self.timeRemaining,
+                            totalDuration: self.selectedDuration.seconds,
+                            isPaused: false
+                        )
+                    }
                 } else {
                     self.timer?.invalidate()
                     self.timer = nil

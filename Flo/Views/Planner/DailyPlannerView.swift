@@ -102,29 +102,27 @@ struct DailyPlannerView: View {
     // MARK: - Quick Actions
 
     private var quickActions: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                NavigationLink {
-                    AIAssistantView()
-                } label: {
-                    QuickActionLabel(icon: "sparkles", label: "AI", color: Color(hex: "8B5CF6"))
-                }
-                QuickActionButton(icon: "sun.max.fill", label: "Check-in", color: FloColors.Hex.warning) {
-                    showMorningCheckIn = true
-                }
-                QuickActionButton(icon: "moon.fill", label: "Review", color: Color(hex: "8B5CF6")) {
-                    showEveningReview = true
-                }
-                NavigationLink {
-                    DataExportView()
-                } label: {
-                    QuickActionLabel(icon: "square.and.arrow.up", label: "Export", color: Color(hex: "4A90D9"))
-                }
-                NavigationLink {
-                    ProfileView()
-                } label: {
-                    QuickActionLabel(icon: "person.circle", label: "Profile", color: FloColors.Hex.accent)
-                }
+        HStack(spacing: 14) {
+            NavigationLink {
+                AIAssistantView()
+            } label: {
+                QuickActionLabel(icon: "sparkles", label: "AI", color: Color(hex: "8B5CF6"))
+            }
+            QuickActionButton(icon: "sun.max.fill", label: "Check-in", color: FloColors.Hex.warning) {
+                showMorningCheckIn = true
+            }
+            QuickActionButton(icon: "moon.fill", label: "Review", color: Color(hex: "8B5CF6")) {
+                showEveningReview = true
+            }
+            NavigationLink {
+                DataExportView()
+            } label: {
+                QuickActionLabel(icon: "square.and.arrow.up", label: "Export", color: Color(hex: "4A90D9"))
+            }
+            NavigationLink {
+                ProfileView()
+            } label: {
+                QuickActionLabel(icon: "person.circle", label: "Profile", color: FloColors.Hex.accent)
             }
         }
     }
@@ -355,22 +353,18 @@ private struct QuickActionContent: View {
     let color: Color
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             Image(systemName: icon)
-                .font(.system(size: 18))
+                .font(.system(size: 20))
                 .foregroundStyle(color)
-                .frame(width: 40, height: 40)
+                .frame(width: 48, height: 48)
                 .background(color.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .clipShape(Circle())
             Text(label)
                 .font(FloTypography.caption2)
                 .foregroundStyle(FloColors.Hex.textSecondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(FloColors.Hex.surface)
-        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .shadow(color: .black.opacity(0.03), radius: 4, y: 2)
     }
 }
 

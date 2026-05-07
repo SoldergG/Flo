@@ -18,6 +18,7 @@
 		10516D62B550FF7537F5E0CC /* MorningCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1AD137E5B854688F47407D /* MorningCheckInView.swift */; };
 		10C1E5FA3E3EC3BCBB896410 /* FocusTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3CBD184DC8676BC261B302 /* FocusTimerWidget.swift */; };
 		112B2339592D943DF5B23A8E /* FloTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */; };
+		119D00A897552BC61DAE59D4 /* FocusLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E187E78D4C18D3BEE735B3 /* FocusLiveActivity.swift */; };
 		126D58FFFB8AD99246A25D45 /* ToggleHabitIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC463BDF10994C05BA3A77DE /* ToggleHabitIntent.swift */; };
 		1292C08E4F9D3615A430B3B0 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11249C461E3ADCF29A298B83 /* StoreKitManager.swift */; };
 		13C4A1E00A20B2E5E7B6DDFC /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6810F43EBC488FEC9EFB937 /* ThemePickerView.swift */; };
@@ -57,6 +58,7 @@
 		383A94EC56165976DC74EA62 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B513499CF4DA7C7704D42B92 /* SharedData.swift */; };
 		3A58D942C4CAFA2CE2E03961 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7604618AE902A760194FBFF3 /* SyncService.swift */; };
 		3B81F31D04F13C11FF00285D /* FloProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED1A1B7C62817B55AA388B0 /* FloProgressRing.swift */; };
+		3EA7CF173F1150ECB782BE18 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2081B9E13A046636829D87B5 /* LiveActivityManager.swift */; };
 		3F07740C766E3184A150B38A /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */; };
 		3F278D8D44F04137BC218F41 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5959508A93309DD4C55E40B2 /* FocusSession.swift */; };
 		4054F8E54B678042B5CB1918 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F4CAC06D07E29C6090E45E /* Habit.swift */; };
@@ -74,6 +76,7 @@
 		506730091F68E98C726D55A7 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */; };
 		50DE7237011EF070346DA9C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B98F671E9B86A1F99F15E33E /* Assets.xcassets */; };
 		537E2B83BC4B4637C658B4A6 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFE3BDDDBA7A6FDF06418D1 /* TasksView.swift */; };
+		5839E36CA776A72146B91801 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD3D5CF2ED0EA4DA7B7D26 /* CalendarService.swift */; };
 		5955D86CFC06D4E2A0BC0E73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B98F671E9B86A1F99F15E33E /* Assets.xcassets */; };
 		5B5E470AFE6CFA73FCBAF014 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5835F7E6E742728CB7D59FE /* WhatsNewView.swift */; };
 		5C55682AEC2E36A0181F702E /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3C6100FF9F657C235ACAA4 /* Project.swift */; };
@@ -85,6 +88,7 @@
 		6770D33C63140CF3FE3013EF /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2803732B849FFE25091E1A10 /* Note.swift */; };
 		6B7105546E584BEC599070BB /* FocusTimerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3CBD184DC8676BC261B302 /* FocusTimerWidget.swift */; };
 		6BCAE234952643078C4D3A90 /* MoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827B8D44EB3A61E0F8603BE5 /* MoodEntry.swift */; };
+		6C0954BDA7163C51D02E15AC /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51AD3D5CF2ED0EA4DA7B7D26 /* CalendarService.swift */; };
 		6CCC0A837AA6AA7D6E35DE6D /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFE3BDDDBA7A6FDF06418D1 /* TasksView.swift */; };
 		6CF2FFA519700BE0C67E7735 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0080A375746D6C5C88217EB4 /* ContentView.swift */; };
 		6E2C139D9DE990DA2F842E7B /* KanbanBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92C37013F149353C94B3DDD /* KanbanBoardView.swift */; };
@@ -97,6 +101,7 @@
 		7858FDBC9767F5E7EA81F30C /* FloTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */; };
 		7ACD7366413AC8789DEF0044 /* FocusTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E2AD0C773BDC3706CF63E /* FocusTimerView.swift */; };
 		7EC127920D066AFE70126B96 /* FocusHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DB1872E4F231067B2FA181 /* FocusHistoryView.swift */; };
+		7EC78098FE04FA86984365F2 /* FocusLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E187E78D4C18D3BEE735B3 /* FocusLiveActivity.swift */; };
 		7F12172E2377607839E90F13 /* DataExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911FA75A88487203D5BAFF94 /* DataExportView.swift */; };
 		816957AEFF91CFB8A81CEAF9 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C565C42C6FEFAE3C89451D /* NotesView.swift */; };
 		81BA4922D583AFB4E1C21720 /* KanbanBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92C37013F149353C94B3DDD /* KanbanBoardView.swift */; };
@@ -141,6 +146,7 @@
 		C6EF2299A6F9884660369109 /* EveningReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E3F8B010E42FCFD60E398 /* EveningReviewView.swift */; };
 		CA3FA67BBF8CE484852F3FCD /* FocusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9202083731A26ABEB17258C3 /* FocusViewModel.swift */; };
 		D08BDCA520BE847ADB162D3C /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D41F2E955CC84DC208FE7D1 /* OnboardingView.swift */; };
+		D155ADEBFB5AFE7402158228 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2081B9E13A046636829D87B5 /* LiveActivityManager.swift */; };
 		D1AEFA33B7BD20A8E8412841 /* MoodEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827B8D44EB3A61E0F8603BE5 /* MoodEntry.swift */; };
 		D29916E9BAB570AB4773E010 /* FloApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62AE5D376932D4CDBDCB3B9 /* FloApp.swift */; };
 		D310CF2B104EB39454B539EB /* MorningCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1AD137E5B854688F47407D /* MorningCheckInView.swift */; };
@@ -198,6 +204,7 @@
 		116F11AFA3EB5083F4EE1FC4 /* FloWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = FloWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		13C2DE48E6EB2BF76F26D2CB /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		1B2CEEC246B02DCDCFA9D1C0 /* FloButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloButton.swift; sourceTree = "<group>"; };
+		2081B9E13A046636829D87B5 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		265955490D96A231E27A4330 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		2803732B849FFE25091E1A10 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		284545D2295542BA355920AB /* AIFeaturesHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIFeaturesHubView.swift; sourceTree = "<group>"; };
@@ -216,6 +223,7 @@
 		4B77E3F7A1F6A3C917B1FEF6 /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		4B8210CBECA77C2A6D13D494 /* AIDailyBriefingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDailyBriefingView.swift; sourceTree = "<group>"; };
 		4BF2C28F2AF785DBE386DB5A /* WeeklyPlannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyPlannerView.swift; sourceTree = "<group>"; };
+		51AD3D5CF2ED0EA4DA7B7D26 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
 		556B58459AD095759D354A50 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		5959508A93309DD4C55E40B2 /* FocusSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSession.swift; sourceTree = "<group>"; };
 		5BEDADACE8C3588793D3A0F0 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
@@ -262,6 +270,7 @@
 		C95D1A9A1D3236FDB51EF57F /* FloTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloTypography.swift; sourceTree = "<group>"; };
 		CB84DA015A11AC4333B16BAA /* Flo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flo.entitlements; sourceTree = "<group>"; };
 		CC522C35DC6889867E09C0C6 /* FloEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloEmptyState.swift; sourceTree = "<group>"; };
+		D0E187E78D4C18D3BEE735B3 /* FocusLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusLiveActivity.swift; sourceTree = "<group>"; };
 		D7C565C42C6FEFAE3C89451D /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		DB7566C5A2B1007346EFD106 /* TodaySummaryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySummaryWidget.swift; sourceTree = "<group>"; };
 		E4F45CEBE0BCDF47142499C5 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
@@ -329,8 +338,10 @@
 			isa = PBXGroup;
 			children = (
 				E4F45CEBE0BCDF47142499C5 /* AdManager.swift */,
+				51AD3D5CF2ED0EA4DA7B7D26 /* CalendarService.swift */,
 				7546598617C310FB2E710E52 /* FloAIService.swift */,
 				556B58459AD095759D354A50 /* HapticManager.swift */,
+				2081B9E13A046636829D87B5 /* LiveActivityManager.swift */,
 				9C1348E4166A22517B9D98FD /* NotificationManager.swift */,
 				B2A12173DB26A069E848967C /* QuickActionsManager.swift */,
 				11249C461E3ADCF29A298B83 /* StoreKitManager.swift */,
@@ -355,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8778D6F97C841B8ACEAB31 /* DesignSystem */,
+				A707D39A40A67A391243430A /* LiveActivity */,
 				E7CA62681C6B5678D077E189 /* Models */,
 				3D43818E8F1616933C85B6EC /* Services */,
 				65F75ABFEE4922E8AF23C63C /* ViewModels */,
@@ -456,6 +468,14 @@
 				D7C565C42C6FEFAE3C89451D /* NotesView.swift */,
 			);
 			path = Notes;
+			sourceTree = "<group>";
+		};
+		A707D39A40A67A391243430A /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				D0E187E78D4C18D3BEE735B3 /* FocusLiveActivity.swift */,
+			);
+			path = LiveActivity;
 			sourceTree = "<group>";
 		};
 		A8774DCBAE32BB65C29BDA78 /* Widgets */ = {
@@ -769,6 +789,7 @@
 				4F4036C1863758B92BB00D28 /* AmbientSoundsView.swift in Sources */,
 				9AC13EEBAE0E07D72537C54B /* AppIconView.swift in Sources */,
 				860392EAE483D34D5A1982FB /* AuthView.swift in Sources */,
+				5839E36CA776A72146B91801 /* CalendarService.swift in Sources */,
 				6CF2FFA519700BE0C67E7735 /* ContentView.swift in Sources */,
 				DD780213A881A6B99C25BB1B /* DailyPlannerView.swift in Sources */,
 				AB4041743D68F31958A016A8 /* DailyScore.swift in Sources */,
@@ -787,6 +808,7 @@
 				D7C534342F901BB0A17BFA3E /* FloTextField.swift in Sources */,
 				112B2339592D943DF5B23A8E /* FloTypography.swift in Sources */,
 				054BDC6302065632FC5D6056 /* FocusHistoryView.swift in Sources */,
+				119D00A897552BC61DAE59D4 /* FocusLiveActivity.swift in Sources */,
 				F9C98BE02C3486F6D67ADB55 /* FocusPreset.swift in Sources */,
 				4A4A7CE88A02FEBD18AA6592 /* FocusPresetsView.swift in Sources */,
 				605599C124EF0232379CFCF8 /* FocusReportView.swift in Sources */,
@@ -803,6 +825,7 @@
 				228B5094E334DB40FDE63074 /* JournalView.swift in Sources */,
 				6E2C139D9DE990DA2F842E7B /* KanbanBoardView.swift in Sources */,
 				D6D7D41D691C8691F7C342E6 /* LiquidGlass.swift in Sources */,
+				3EA7CF173F1150ECB782BE18 /* LiveActivityManager.swift in Sources */,
 				D1AEFA33B7BD20A8E8412841 /* MoodEntry.swift in Sources */,
 				D310CF2B104EB39454B539EB /* MorningCheckInView.swift in Sources */,
 				1CA33E486F555D949CD84FC6 /* Note.swift in Sources */,
@@ -866,6 +889,7 @@
 				E91AF914FE114F547C0062E2 /* AmbientSoundsView.swift in Sources */,
 				03E804A4E2FCA8969DC75780 /* AppIconView.swift in Sources */,
 				A8789D60BC3CA5B4A0BAF2C2 /* AuthView.swift in Sources */,
+				6C0954BDA7163C51D02E15AC /* CalendarService.swift in Sources */,
 				9E3002AD8D1D5C667A83ED58 /* ContentView.swift in Sources */,
 				228D9E518BD7732A4A7CE823 /* DailyPlannerView.swift in Sources */,
 				BF81986168EAABD196E455C0 /* DailyScore.swift in Sources */,
@@ -884,6 +908,7 @@
 				440B733E37A051B4F7ED4F44 /* FloTextField.swift in Sources */,
 				7858FDBC9767F5E7EA81F30C /* FloTypography.swift in Sources */,
 				7EC127920D066AFE70126B96 /* FocusHistoryView.swift in Sources */,
+				7EC78098FE04FA86984365F2 /* FocusLiveActivity.swift in Sources */,
 				F06EA0CF1485061A8A8A276D /* FocusPreset.swift in Sources */,
 				ACB9CAEE4C3E4C965EB1320B /* FocusPresetsView.swift in Sources */,
 				2E34543DA16ABD43CB2CD243 /* FocusReportView.swift in Sources */,
@@ -900,6 +925,7 @@
 				06D1678B3CA98110FF4A30A3 /* JournalView.swift in Sources */,
 				81BA4922D583AFB4E1C21720 /* KanbanBoardView.swift in Sources */,
 				25C499BE4A63731A6F25983C /* LiquidGlass.swift in Sources */,
+				D155ADEBFB5AFE7402158228 /* LiveActivityManager.swift in Sources */,
 				6BCAE234952643078C4D3A90 /* MoodEntry.swift in Sources */,
 				10516D62B550FF7537F5E0CC /* MorningCheckInView.swift in Sources */,
 				6770D33C63140CF3FE3013EF /* Note.swift in Sources */,
@@ -1053,6 +1079,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Flo needs calendar access to add habit reminders to your Apple Calendar.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1102,6 +1130,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Flo needs calendar access to add habit reminders to your Apple Calendar.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1152,6 +1182,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Flo needs calendar access to add habit reminders to your Apple Calendar.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1261,6 +1293,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Flō";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Flo needs calendar access to add habit reminders to your Apple Calendar.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

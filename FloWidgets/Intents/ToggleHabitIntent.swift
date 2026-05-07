@@ -4,8 +4,8 @@ import WidgetKit
 // MARK: - Habit Entity for AppIntents
 
 struct HabitEntity: AppEntity {
-    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Habit")
-    static var defaultQuery = HabitEntityQuery()
+    nonisolated(unsafe) static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Habit")
+    nonisolated(unsafe) static var defaultQuery = HabitEntityQuery()
 
     var id: String
     var name: String
@@ -39,8 +39,8 @@ struct HabitEntityQuery: EntityQuery {
 // MARK: - Toggle Habit Intent
 
 struct ToggleHabitIntent: AppIntent {
-    static var title: LocalizedStringResource = "Toggle Habit"
-    static var description: IntentDescription = "Mark a habit as completed or uncompleted for today."
+    nonisolated(unsafe) static var title: LocalizedStringResource = "Toggle Habit"
+    nonisolated(unsafe) static var description: IntentDescription = "Mark a habit as completed or uncompleted for today."
 
     @Parameter(title: "Habit")
     var habit: HabitEntity

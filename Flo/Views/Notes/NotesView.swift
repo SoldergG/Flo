@@ -6,6 +6,7 @@ struct NotesView: View {
     @Query(sort: \Note.updatedAt, order: .reverse) private var notes: [Note]
     @Query private var folders: [NoteFolder]
     @State private var vm = NotesViewModel()
+    @State private var editingNote: Note?
 
     var body: some View {
         NavigationStack {
@@ -22,19 +23,21 @@ struct NotesView: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     FloIconButton("plus.circle.fill", color: FloColors.Hex.accent) {
-                        let note = Note(title: "", content: "")
-                        context.insert(note)
-                        try? context.save()
-                        vm.showingAddNote = true
+                        createAndOpenNote()
                     }
                 }
             }
-            .sheet(isPresented: $vm.showingAddNote) {
-                if let lastNote = notes.first {
-                    NoteEditorSheet(note: lastNote)
-                }
+            .sheet(item: $editingNote) { note in
+                NoteEditorSheet(note: note)
             }
         }
+    }
+
+    private func createAndOpenNote() {
+        let note = Note(title: "", content: "")
+        context.insert(note)
+        try? context.save()
+        editingNote = note
     }
 
     private var emptyState: some View {
@@ -52,9 +55,7 @@ struct NotesView: View {
                 .foregroundStyle(FloColors.Hex.textSecondary)
 
             FloButton("New Note", icon: "plus", style: .secondary) {
-                let note = Note(title: "", content: "")
-                context.insert(note)
-                vm.showingAddNote = true
+                createAndOpenNote()
             }
             .frame(width: 200)
         }
@@ -206,6 +207,8 @@ struct NoteEditorSheet: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     @Bindable var note: Note
+    @FocusState private var isTitleFocused: Bool
+    @FocusState private var isContentFocused: Bool
 
     var body: some View {
         NavigationStack {
@@ -213,18 +216,25 @@ struct NoteEditorSheet: View {
                 FloColors.Hex.background.ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    TextField("Title", text: $note.title)
+                    TextField("Note title...", text: $note.title)
                         .font(FloTypography.title2)
                         .foregroundStyle(FloColors.Hex.textPrimary)
+                        .focused($isTitleFocused)
                         .padding(.horizontal, 20)
                         .padding(.top, 16)
+                        .submitLabel(.next)
+                        .onSubmit { isContentFocused = true }
 
                     TextEditor(text: $note.content)
                         .font(FloTypography.body)
                         .foregroundStyle(FloColors.Hex.textPrimary)
                         .scrollContentBackground(.hidden)
+                        .focused($isContentFocused)
                         .padding(.horizontal, 16)
                         .padding(.top, 8)
+                        .onChange(of: note.content) { _, _ in
+                            note.updateMetrics()
+                        }
 
                     // Bottom bar
                     HStack {
@@ -232,7 +242,25 @@ struct NoteEditorSheet: View {
                             .font(FloTypography.caption)
                             .foregroundStyle(FloColors.Hex.textTertiary)
 
+                        Text("·")
+                            .foregroundStyle(FloColors.Hex.textTertiary)
+
+                        Text(note.readingTimeLabel)
+                            .font(FloTypography.caption)
+                            .foregroundStyle(FloColors.Hex.textTertiary)
+
                         Spacer()
+
+                        Button {
+                            withAnimation(FloAnimations.springSnappy) {
+                                note.isFavorite.toggle()
+                            }
+                        } label: {
+                            Image(systemName: note.isFavorite ? "heart.fill" : "heart")
+                                .font(.system(size: 14))
+                                .foregroundStyle(note.isFavorite ? FloColors.Hex.error : FloColors.Hex.textSecondary)
+                        }
+                        .padding(.trailing, 8)
 
                         Button {
                             withAnimation(FloAnimations.springSnappy) {
@@ -241,7 +269,7 @@ struct NoteEditorSheet: View {
                         } label: {
                             Image(systemName: note.isPinned ? "pin.slash.fill" : "pin.fill")
                                 .font(.system(size: 14))
-                                .foregroundStyle(FloColors.Hex.textSecondary)
+                                .foregroundStyle(note.isPinned ? FloColors.Hex.accent : FloColors.Hex.textSecondary)
                         }
                     }
                     .padding(.horizontal, 20)
@@ -249,18 +277,36 @@ struct NoteEditorSheet: View {
                     .background(FloColors.Hex.surface)
                 }
             }
-            .navigationTitle("Edit Note")
+            .navigationTitle(note.title.isEmpty ? "New Note" : "Edit Note")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        // If empty note, delete it
+                        if note.title.isEmpty && note.content.isEmpty {
+                            context.delete(note)
+                            try? context.save()
+                        }
+                        dismiss()
+                    }
+                    .foregroundStyle(FloColors.Hex.textSecondary)
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         note.updatedAt = .now
+                        note.updateMetrics()
                         try? context.save()
                         dismiss()
                     }
                     .foregroundStyle(FloColors.Hex.accent)
+                    .fontWeight(.semibold)
+                }
+            }
+            .onAppear {
+                if note.title.isEmpty {
+                    isTitleFocused = true
                 }
             }
         }
