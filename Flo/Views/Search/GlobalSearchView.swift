@@ -48,7 +48,9 @@ struct GlobalSearchView: View {
             }
             .background(FloColors.Hex.background)
             .navigationTitle("Search")
+            #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
@@ -195,8 +197,12 @@ struct GlobalSearchView: View {
                 }
             }
         }
+        #if os(iOS)
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
+        #else
+        .listStyle(.sidebar)
+        #endif
     }
 
     // MARK: - Filtering Logic

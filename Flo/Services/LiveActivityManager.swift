@@ -1,6 +1,6 @@
 import Foundation
 
-#if canImport(ActivityKit)
+#if os(iOS)
 import ActivityKit
 
 // MARK: - Live Activity Manager

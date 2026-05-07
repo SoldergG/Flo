@@ -60,24 +60,12 @@ struct ContentView: View {
             }
             Tab("Notes", systemImage: "note.text", value: .notes) {
                 NotesView()
-<<<<<<< Updated upstream
             }
         }
         .tint(FloColors.Hex.accent)
-        .safeAreaInset(edge: .bottom) {
-            if !store.isPro {
-                FloBannerAdView()
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
-        }
         .sheet(isPresented: $showSearch) {
             GlobalSearchView()
         }
-=======
-            }
-        }
-        .tint(FloColors.Hex.accent)
->>>>>>> Stashed changes
     }
     #endif
 

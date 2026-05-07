@@ -71,8 +71,12 @@ struct AppIconView: View {
             }
         }
         .navigationTitle("App Icon")
+        #if os(iOS)
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
+        #else
+        .listStyle(.sidebar)
+        #endif
         .background(FloColors.Hex.background)
     }
 

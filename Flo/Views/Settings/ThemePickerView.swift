@@ -143,7 +143,11 @@ struct ThemePickerView: View {
             }
         }
         .navigationTitle("Appearance")
+        #if os(iOS)
         .listStyle(.insetGrouped)
+        #else
+        .listStyle(.sidebar)
+        #endif
         .scrollContentBackground(.hidden)
         .background(FloColors.Hex.background)
     }
