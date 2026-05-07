@@ -40,13 +40,7 @@ struct SettingsView: View {
                                             .foregroundStyle(.white)
                                             .padding(.horizontal, 7)
                                             .padding(.vertical, 2)
-                                            .background(
-                                                LinearGradient(
-                                                    colors: [FloColors.Hex.accent, Color(hex: "E5A84B")],
-                                                    startPoint: .leading,
-                                                    endPoint: .trailing
-                                                )
-                                            )
+                                            .background(FloColors.Hex.accent)
                                             .clipShape(Capsule())
                                     }
                                 }
@@ -67,13 +61,7 @@ struct SettingsView: View {
                                 HStack(spacing: 12) {
                                     Image(systemName: "crown.fill")
                                         .font(.system(size: 18))
-                                        .foregroundStyle(
-                                            LinearGradient(
-                                                colors: [FloColors.Hex.accent, Color(hex: "E5A84B")],
-                                                startPoint: .topLeading,
-                                                endPoint: .bottomTrailing
-                                            )
-                                        )
+                                        .foregroundStyle(FloColors.Hex.accent)
 
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("Upgrade to Pro")

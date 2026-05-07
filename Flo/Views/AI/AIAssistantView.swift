@@ -78,25 +78,12 @@ struct AIAssistantView: View {
 
             ZStack {
                 Circle()
-                    .fill(
-                        RadialGradient(
-                            colors: [Color(hex: "8B5CF6").opacity(0.2), .clear],
-                            center: .center,
-                            startRadius: 10,
-                            endRadius: 60
-                        )
-                    )
+                    .fill(FloColors.Hex.accentSoft)
                     .frame(width: 120, height: 120)
 
                 Image(systemName: "bubble.left.and.bubble.right.fill")
                     .font(.system(size: 40))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [Color(hex: "8B5CF6"), FloColors.Hex.accent],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .foregroundStyle(FloColors.Hex.accent)
             }
 
             VStack(spacing: 8) {
@@ -274,13 +261,7 @@ private struct ChatBubble: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.white)
                     .frame(width: 26, height: 26)
-                    .background(
-                        LinearGradient(
-                            colors: [Color(hex: "8B5CF6"), FloColors.Hex.accent],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .background(FloColors.Hex.accent)
                     .clipShape(Circle())
             }
 
@@ -292,12 +273,7 @@ private struct ChatBubble: View {
                     .padding(.vertical, 10)
                     .background(
                         message.role == .user
-                            ? AnyShapeStyle(
-                                LinearGradient(
-                                    colors: [FloColors.Hex.accent, FloColors.Hex.accentSecondary],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ))
+                            ? AnyShapeStyle(FloColors.Hex.accent)
                             : AnyShapeStyle(FloColors.Hex.surface)
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -331,13 +307,7 @@ private struct TypingIndicator: View {
                 .font(.system(size: 12))
                 .foregroundStyle(.white)
                 .frame(width: 26, height: 26)
-                .background(
-                    LinearGradient(
-                        colors: [Color(hex: "8B5CF6"), FloColors.Hex.accent],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+                .background(FloColors.Hex.accent)
                 .clipShape(Circle())
 
             HStack(spacing: 4) {

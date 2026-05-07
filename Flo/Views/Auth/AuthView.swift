@@ -175,8 +175,8 @@ struct AuthView: View {
             )
             #if !os(macOS)
             .textInputAutocapitalization(.never)
-            #endif
             .keyboardType(.emailAddress)
+            #endif
 
             SecureFieldStyled(
                 placeholder: "Password",

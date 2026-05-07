@@ -115,13 +115,17 @@ struct GlassTabBar<Tab: Hashable & CaseIterable>: View where Tab: Identifiable {
 /// Applies a glass effect to the navigation bar on iOS 26+.
 struct GlassNavigationBarModifier: ViewModifier {
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, macOS 26.0, *) {
+        #if os(iOS)
+        if #available(iOS 26.0, *) {
             content
                 .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
         } else {
             content
                 .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
         }
+        #else
+        content
+        #endif
     }
 }
 
@@ -189,13 +193,17 @@ struct InteractiveGlassModifier: ViewModifier {
 /// Applies glass container background for tab bars on iOS 26+.
 struct GlassTabBarContainerModifier: ViewModifier {
     func body(content: Content) -> some View {
-        if #available(iOS 26.0, macOS 26.0, *) {
+        #if os(iOS)
+        if #available(iOS 26.0, *) {
             content
                 .toolbarBackgroundVisibility(.hidden, for: .tabBar)
         } else {
             content
                 .toolbarBackground(.ultraThinMaterial, for: .tabBar)
         }
+        #else
+        content
+        #endif
     }
 }
 

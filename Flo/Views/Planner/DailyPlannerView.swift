@@ -39,13 +39,7 @@ struct DailyPlannerView: View {
                         AIDailyBriefingView()
                     } label: {
                         Image(systemName: "sparkles")
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [Color(hex: "8B5CF6"), FloColors.Hex.accent],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
+                            .foregroundStyle(FloColors.Hex.accent)
                     }
 
                     NavigationLink {

@@ -60,6 +60,7 @@ struct ContentView: View {
             }
             Tab("Notes", systemImage: "note.text", value: .notes) {
                 NotesView()
+<<<<<<< Updated upstream
             }
         }
         .tint(FloColors.Hex.accent)
@@ -72,6 +73,11 @@ struct ContentView: View {
         .sheet(isPresented: $showSearch) {
             GlobalSearchView()
         }
+=======
+            }
+        }
+        .tint(FloColors.Hex.accent)
+>>>>>>> Stashed changes
     }
     #endif
 

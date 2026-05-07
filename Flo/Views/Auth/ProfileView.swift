@@ -99,15 +99,9 @@ struct ProfileView: View {
         VStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [FloColors.Hex.accent, FloColors.Hex.accentSecondary],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .fill(FloColors.Hex.accent)
                     .frame(width: 96, height: 96)
-                    .shadow(color: FloColors.Hex.accent.opacity(0.3), radius: 16, y: 8)
+                    .shadow(color: FloColors.Hex.accent.opacity(0.2), radius: 12, y: 4)
 
                 Text(userInitials)
                     .font(.system(size: 36, weight: .bold, design: .rounded))

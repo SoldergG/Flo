@@ -205,13 +205,7 @@ struct AIDailyBriefingView: View {
             }
         }
         .padding(20)
-        .background(
-            LinearGradient(
-                colors: [FloColors.Hex.accentSoft, FloColors.Hex.surface],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
+        .background(FloColors.Hex.accentSoft)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .transition(FloAnimations.fadeScale)
     }
