@@ -79,6 +79,20 @@ The name **Flo** comes from the concept of "flow state" — that moment of compl
 - **Templates** — Meeting Notes, Daily Journal, Project Brief, Brainstorm, Reading Notes
 - **Word count & reading time** tracking
 - **Nested folder** organization
+- **Auto-focus** title field on new notes
+- **Smart cancel** — empty notes auto-delete on dismiss
+
+### Live Activities
+- **Dynamic Island** — compact and expanded views during focus sessions
+- **Lock Screen** — real-time progress with circular timer and countdown
+- **Pause/resume** state reflected in real-time
+- **Task name** displayed when linked to a task
+
+### Apple Calendar Integration
+- **Automatic habit events** — habits added to Apple Calendar with recurrence
+- **Smart scheduling** — respects daily, weekdays, weekends frequency
+- **Reminder notifications** — local notifications at your chosen time
+- **EventKit** powered — seamless native calendar integration
 
 ### AI Features (50+ AI-Powered Capabilities)
 Powered by **Groq API** for ultra-fast inference:
@@ -129,6 +143,8 @@ Powered by **Groq API** for ultra-fast inference:
 - **Keyboard Shortcuts** for macOS
 - **Data Export** functionality
 - **5-page animated onboarding** with integrated paywall
+- **Live Activities** — Dynamic Island + Lock Screen for focus timer
+- **Apple Calendar sync** for habits via EventKit
 
 ---
 
@@ -178,8 +194,12 @@ Flo/
 │   ├── AdManager.swift             # AdMob integration
 │   ├── NotificationManager.swift   # Local notifications
 │   ├── HapticManager.swift         # Haptic feedback
+│   ├── CalendarService.swift        # EventKit calendar integration
+│   ├── LiveActivityManager.swift    # Dynamic Island / Lock Screen
 │   ├── QuickActionsManager.swift   # Home screen shortcuts
 │   └── WidgetDataService.swift     # Widget data provider
+├── LiveActivity/
+│   └── FocusLiveActivity.swift     # ActivityKit attributes & widgets
 └── DesignSystem/
     ├── FloColors.swift             # Color palette + themes
     ├── FloTypography.swift         # Typography scale
@@ -205,6 +225,8 @@ Flo/
 | **Monetization** | StoreKit 2 |
 | **Ads** | Google AdMob |
 | **Notifications** | UserNotifications |
+| **Live Activities** | ActivityKit |
+| **Calendar** | EventKit |
 | **Project Gen** | XcodeGen |
 | **Platforms** | iOS 26+ / macOS 26+ |
 
