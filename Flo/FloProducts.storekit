@@ -1,0 +1,106 @@
+{
+  "identifier" : "E31C5C86-1234-4567-89AB-CDEF01234567",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "0",
+    "_developerTeamID" : "",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "setting" : 0
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "FLO_PRO_GROUP",
+      "localizations" : [
+
+      ],
+      "name" : "Flo Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "A1B2C3D4-0001",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "TRIAL_MONTHLY",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all Flo features, AI assistant, no ads",
+              "displayName" : "Flo Pro Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.solderg.flo.pro.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Flo Pro Monthly",
+          "subscriptionGroupID" : "FLO_PRO_GROUP",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "A1B2C3D4-0002",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "TRIAL_YEARLY",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all Flo features, AI assistant, no ads — best value",
+              "displayName" : "Flo Pro Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.solderg.flo.pro.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Flo Pro Yearly",
+          "subscriptionGroupID" : "FLO_PRO_GROUP",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

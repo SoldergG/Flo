@@ -6,9 +6,12 @@ struct DailyPlannerView: View {
     @Query(sort: \TaskItem.createdAt, order: .reverse) private var allTasks: [TaskItem]
     @Query(filter: #Predicate<Habit> { !$0.isArchived }) private var habits: [Habit]
     @Query(filter: #Predicate<FocusSession> { $0.wasCompleted }) private var sessions: [FocusSession]
+    @Query(sort: \MoodEntry.createdAt, order: .reverse) private var moodEntries: [MoodEntry]
 
     @State private var selectedDate = Date.now
     @State private var greeting = ""
+    @State private var showMorningCheckIn = false
+    @State private var showEveningReview = false
 
     var body: some View {
         NavigationStack {
@@ -18,7 +21,9 @@ struct DailyPlannerView: View {
                 ScrollView {
                     VStack(spacing: 20) {
                         headerSection
+                        quickActions
                         statsRow
+                        todayMood
                         todaysTasks
                         habitsSection
                     }
@@ -28,7 +33,53 @@ struct DailyPlannerView: View {
                 }
             }
             .navigationTitle("Today")
-            .onAppear { updateGreeting() }
+            .toolbar {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    NavigationLink {
+                        AIDailyBriefingView()
+                    } label: {
+                        Image(systemName: "sparkles")
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [Color(hex: "8B5CF6"), FloColors.Hex.accent],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                    }
+
+                    NavigationLink {
+                        WeeklyPlannerView()
+                    } label: {
+                        Image(systemName: "calendar.badge.clock")
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                    }
+
+                    NavigationLink {
+                        ProductivityScoreView()
+                    } label: {
+                        Image(systemName: "chart.line.uptrend.xyaxis")
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                    }
+
+                    NavigationLink {
+                        JournalView()
+                    } label: {
+                        Image(systemName: "book")
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                    }
+                }
+            }
+            .onAppear {
+                updateGreeting()
+                WidgetDataService.shared.updateAllWidgets(context: context)
+            }
+            .sheet(isPresented: $showMorningCheckIn) {
+                MorningCheckInView()
+            }
+            .sheet(isPresented: $showEveningReview) {
+                EveningReviewView()
+            }
         }
     }
 
@@ -48,12 +99,43 @@ struct DailyPlannerView: View {
         .padding(.top, 8)
     }
 
+    // MARK: - Quick Actions
+
+    private var quickActions: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                NavigationLink {
+                    AIAssistantView()
+                } label: {
+                    QuickActionLabel(icon: "sparkles", label: "AI", color: Color(hex: "8B5CF6"))
+                }
+                QuickActionButton(icon: "sun.max.fill", label: "Check-in", color: FloColors.Hex.warning) {
+                    showMorningCheckIn = true
+                }
+                QuickActionButton(icon: "moon.fill", label: "Review", color: Color(hex: "8B5CF6")) {
+                    showEveningReview = true
+                }
+                NavigationLink {
+                    DataExportView()
+                } label: {
+                    QuickActionLabel(icon: "square.and.arrow.up", label: "Export", color: Color(hex: "4A90D9"))
+                }
+                NavigationLink {
+                    ProfileView()
+                } label: {
+                    QuickActionLabel(icon: "person.circle", label: "Profile", color: FloColors.Hex.accent)
+                }
+            }
+        }
+    }
+
     // MARK: - Stats
 
     private var todayTasks: [TaskItem] {
         let today = Calendar.current.startOfDay(for: selectedDate)
         let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: today)!
         return allTasks.filter { task in
+            if task.isTemplate { return false }
             if let scheduled = task.scheduledDate {
                 return scheduled >= today && scheduled < tomorrow
             }
@@ -64,13 +146,8 @@ struct DailyPlannerView: View {
         }
     }
 
-    private var completedToday: [TaskItem] {
-        todayTasks.filter(\.isCompleted)
-    }
-
-    private var habitsCompletedToday: Int {
-        habits.filter(\.isCompletedToday).count
-    }
+    private var completedToday: [TaskItem] { todayTasks.filter(\.isCompleted) }
+    private var habitsCompletedToday: Int { habits.filter(\.isCompletedToday).count }
 
     private var todayFocusMinutes: Int {
         let today = Calendar.current.startOfDay(for: .now)
@@ -87,20 +164,53 @@ struct DailyPlannerView: View {
                 icon: "checkmark.circle.fill",
                 color: FloColors.Hex.accent
             )
-
             FloStatCard(
                 title: "Habits",
                 value: "\(habitsCompletedToday)/\(habits.count)",
                 icon: "flame.fill",
                 color: FloColors.Hex.warning
             )
-
             FloStatCard(
                 title: "Focus",
                 value: "\(todayFocusMinutes)m",
                 icon: "timer",
                 color: FloColors.Hex.success
             )
+        }
+    }
+
+    // MARK: - Today's Mood
+
+    private var todayMood: some View {
+        Group {
+            if let todayEntry = moodEntries.first(where: { Calendar.current.isDateInToday($0.createdAt) }) {
+                FloCard {
+                    HStack {
+                        Text(todayEntry.moodEmoji)
+                            .font(.system(size: 28))
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Today's mood")
+                                .font(FloTypography.footnote)
+                                .foregroundStyle(FloColors.Hex.textSecondary)
+                            Text("Energy: \(todayEntry.energyLabel)")
+                                .font(FloTypography.caption)
+                                .foregroundStyle(FloColors.Hex.textTertiary)
+                        }
+                        Spacer()
+                        if !todayEntry.topPriorities.isEmpty {
+                            VStack(alignment: .trailing, spacing: 2) {
+                                Text("Top priority")
+                                    .font(FloTypography.caption2)
+                                    .foregroundStyle(FloColors.Hex.textTertiary)
+                                Text(todayEntry.topPriorities.first ?? "")
+                                    .font(FloTypography.footnote)
+                                    .foregroundStyle(FloColors.Hex.textPrimary)
+                                    .lineLimit(1)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -112,9 +222,7 @@ struct DailyPlannerView: View {
                 Text("Today's Tasks")
                     .font(FloTypography.headline)
                     .foregroundStyle(FloColors.Hex.textPrimary)
-
                 Spacer()
-
                 if !todayTasks.isEmpty {
                     Text("\(completedToday.count)/\(todayTasks.count)")
                         .font(FloTypography.badge)
@@ -144,6 +252,7 @@ struct DailyPlannerView: View {
                             task.isCompleted.toggle()
                             task.completedAt = task.isCompleted ? .now : nil
                             try? context.save()
+                            WidgetDataService.shared.updateTaskData(context: context)
                         }
                     }
                     .background(FloColors.Hex.surface)
@@ -161,9 +270,7 @@ struct DailyPlannerView: View {
                 Text("Habits")
                     .font(FloTypography.headline)
                     .foregroundStyle(FloColors.Hex.textPrimary)
-
                 Spacer()
-
                 FloHabitRing(completed: habitsCompletedToday, total: habits.count, size: 28)
             }
 
@@ -193,6 +300,7 @@ struct DailyPlannerView: View {
                                 context.insert(completion)
                             }
                             try? context.save()
+                            WidgetDataService.shared.updateHabitData(context: context)
                         }
                     }
                 }
@@ -202,12 +310,67 @@ struct DailyPlannerView: View {
 
     private func updateGreeting() {
         let hour = Calendar.current.component(.hour, from: .now)
+        let name = UserDefaults.standard.string(forKey: "user_display_name") ?? ""
+        let base: String
         switch hour {
-        case 5..<12: greeting = "Good morning"
-        case 12..<17: greeting = "Good afternoon"
-        case 17..<22: greeting = "Good evening"
-        default: greeting = "Good night"
+        case 5..<12: base = "Good morning"
+        case 12..<17: base = "Good afternoon"
+        case 17..<22: base = "Good evening"
+        default: base = "Good night"
         }
+        greeting = name.isEmpty ? base : "\(base), \(name)"
+    }
+}
+
+// MARK: - Quick Action Button
+
+struct QuickActionButton: View {
+    let icon: String
+    let label: String
+    let color: Color
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            QuickActionContent(icon: icon, label: label, color: color)
+        }
+        .buttonStyle(.plain)
+        .bounceOnTap()
+    }
+}
+
+struct QuickActionLabel: View {
+    let icon: String
+    let label: String
+    let color: Color
+
+    var body: some View {
+        QuickActionContent(icon: icon, label: label, color: color)
+    }
+}
+
+private struct QuickActionContent: View {
+    let icon: String
+    let label: String
+    let color: Color
+
+    var body: some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 18))
+                .foregroundStyle(color)
+                .frame(width: 40, height: 40)
+                .background(color.opacity(0.12))
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            Text(label)
+                .font(FloTypography.caption2)
+                .foregroundStyle(FloColors.Hex.textSecondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 10)
+        .background(FloColors.Hex.surface)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .shadow(color: .black.opacity(0.03), radius: 4, y: 2)
     }
 }
 
@@ -249,7 +412,6 @@ struct MiniHabitRow: View {
                     Circle()
                         .strokeBorder(habit.isCompletedToday ? FloColors.Hex.success : FloColors.Hex.border, lineWidth: 2)
                         .frame(width: 24, height: 24)
-
                     if habit.isCompletedToday {
                         Circle()
                             .fill(FloColors.Hex.success)

@@ -2,20 +2,31 @@ import SwiftUI
 
 struct ContentView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @State private var showOnboarding = false
     @State private var selectedTab: AppTab = .planner
+    @State private var authManager = SupabaseManager.shared
+    @State private var store = StoreKitManager.shared
+    @State private var showAuth = false
     @Namespace private var tabAnimation
 
     var body: some View {
         Group {
-            if hasCompletedOnboarding {
-                mainContent
-            } else {
+            if !hasCompletedOnboarding {
                 OnboardingView {
                     withAnimation(FloAnimations.springDefault) {
                         hasCompletedOnboarding = true
                     }
                 }
+            } else if !authManager.isAuthenticated && showAuth {
+                AuthView()
+                    .transition(FloAnimations.fadeScale)
+            } else {
+                mainContent
+            }
+        }
+        .onAppear {
+            Task {
+                await authManager.observeAuthChanges()
+                await store.updatePurchasedProducts()
             }
         }
     }
@@ -33,59 +44,32 @@ struct ContentView: View {
 
     #if os(iOS)
     private var iOSLayout: some View {
-        ZStack(alignment: .bottom) {
+        VStack(spacing: 0) {
             TabView(selection: $selectedTab) {
-                DailyPlannerView()
-                    .tag(AppTab.planner)
-
-                TasksView()
-                    .tag(AppTab.tasks)
-
-                FocusTimerView()
-                    .tag(AppTab.focus)
-
-                HabitsView()
-                    .tag(AppTab.habits)
-
-                NotesView()
-                    .tag(AppTab.notes)
-            }
-
-            // Custom tab bar
-            floTabBar
-        }
-    }
-
-    private var floTabBar: some View {
-        HStack(spacing: 0) {
-            ForEach(AppTab.allCases) { tab in
-                Button {
-                    withAnimation(FloAnimations.springSnappy) {
-                        selectedTab = tab
-                    }
-                } label: {
-                    VStack(spacing: 4) {
-                        Image(systemName: selectedTab == tab ? tab.selectedIcon : tab.icon)
-                            .font(.system(size: 22))
-                            .symbolEffect(.bounce, value: selectedTab == tab)
-
-                        Text(tab.label)
-                            .font(.system(size: 10, weight: .medium))
-                    }
-                    .foregroundStyle(selectedTab == tab ? FloColors.Hex.accent : FloColors.Hex.textTertiary)
-                    .frame(maxWidth: .infinity)
-                    .padding(.top, 10)
-                    .padding(.bottom, 2)
+                Tab("Today", systemImage: "calendar", value: .planner) {
+                    DailyPlannerView()
                 }
-                .buttonStyle(.plain)
+                Tab("Tasks", systemImage: "checkmark.circle", value: .tasks) {
+                    TasksHubView()
+                }
+                Tab("Focus", systemImage: "timer", value: .focus) {
+                    FocusHubView()
+                }
+                Tab("Habits", systemImage: "flame", value: .habits) {
+                    HabitsHubView()
+                }
+                Tab("Notes", systemImage: "note.text", value: .notes) {
+                    NotesView()
+                }
+            }
+            .tint(FloColors.Hex.accent)
+
+            // Banner ad for free users
+            if !store.isPro {
+                FloBannerAdView()
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
-        .padding(.bottom, 20)
-        .background(
-            FloColors.Hex.surface
-                .shadow(color: .black.opacity(0.06), radius: 12, y: -4)
-                .ignoresSafeArea()
-        )
     }
     #endif
 
@@ -104,7 +88,13 @@ struct ContentView: View {
 
             Spacer()
 
-            // Settings button at bottom
+            // Pro upsell in sidebar for free users
+            if !store.isPro {
+                CompactPaywallBanner()
+                    .padding(.horizontal, 12)
+                    .padding(.bottom, 8)
+            }
+
             NavigationLink {
                 SettingsView()
             } label: {
@@ -115,13 +105,187 @@ struct ContentView: View {
         } detail: {
             switch selectedTab {
             case .planner: DailyPlannerView()
-            case .tasks: TasksView()
-            case .focus: FocusTimerView()
-            case .habits: HabitsView()
+            case .tasks: TasksHubView()
+            case .focus: FocusHubView()
+            case .habits: HabitsHubView()
             case .notes: NotesView()
             }
         }
         .frame(minWidth: 900, minHeight: 600)
     }
     #endif
+}
+
+// MARK: - Tasks Hub (combines all task views)
+
+struct TasksHubView: View {
+    @State private var viewMode: TaskViewMode = .list
+
+    enum TaskViewMode: String, CaseIterable {
+        case list, kanban, matrix, calendar, smart
+        var label: String {
+            switch self {
+            case .list: "List"
+            case .kanban: "Kanban"
+            case .matrix: "Matrix"
+            case .calendar: "Calendar"
+            case .smart: "Smart"
+            }
+        }
+        var icon: String {
+            switch self {
+            case .list: "list.bullet"
+            case .kanban: "rectangle.split.3x1"
+            case .matrix: "square.grid.2x2"
+            case .calendar: "calendar"
+            case .smart: "sparkles"
+            }
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                // View mode picker
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 6) {
+                        ForEach(TaskViewMode.allCases, id: \.self) { mode in
+                            Button {
+                                withAnimation(FloAnimations.springSnappy) {
+                                    viewMode = mode
+                                }
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: mode.icon)
+                                        .font(.system(size: 12))
+                                    Text(mode.label)
+                                        .font(FloTypography.caption)
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 7)
+                                .background(viewMode == mode ? FloColors.Hex.accent : FloColors.Hex.surface)
+                                .foregroundStyle(viewMode == mode ? .white : FloColors.Hex.textSecondary)
+                                .clipShape(Capsule())
+                                .overlay(Capsule().strokeBorder(viewMode == mode ? FloColors.Hex.accent : FloColors.Hex.border, lineWidth: 1))
+                            }
+                            .buttonStyle(.plain)
+                        }
+
+                        NavigationLink {
+                            TaskStatsView()
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "chart.bar")
+                                    .font(.system(size: 12))
+                                Text("Stats")
+                                    .font(FloTypography.caption)
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .background(FloColors.Hex.surface)
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                            .clipShape(Capsule())
+                            .overlay(Capsule().strokeBorder(FloColors.Hex.border, lineWidth: 1))
+                        }
+
+                        NavigationLink {
+                            TaskTemplatesView()
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "doc.on.doc")
+                                    .font(.system(size: 12))
+                                Text("Templates")
+                                    .font(FloTypography.caption)
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 7)
+                            .background(FloColors.Hex.surface)
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                            .clipShape(Capsule())
+                            .overlay(Capsule().strokeBorder(FloColors.Hex.border, lineWidth: 1))
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                }
+                .background(FloColors.Hex.background)
+
+                // Active view
+                Group {
+                    switch viewMode {
+                    case .list: TasksView()
+                    case .kanban: KanbanBoardView()
+                    case .matrix: EisenhowerMatrixView()
+                    case .calendar: TaskCalendarView()
+                    case .smart: SmartListsView()
+                    }
+                }
+            }
+            .background(FloColors.Hex.background)
+        }
+    }
+}
+
+// MARK: - Focus Hub
+
+struct FocusHubView: View {
+    var body: some View {
+        NavigationStack {
+            FocusTimerView()
+                .toolbar {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        NavigationLink {
+                            FocusPresetsView()
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                                .foregroundStyle(FloColors.Hex.textSecondary)
+                        }
+
+                        NavigationLink {
+                            FocusHistoryView()
+                        } label: {
+                            Image(systemName: "clock.arrow.circlepath")
+                                .foregroundStyle(FloColors.Hex.textSecondary)
+                        }
+
+                        NavigationLink {
+                            FocusReportView()
+                        } label: {
+                            Image(systemName: "chart.bar")
+                                .foregroundStyle(FloColors.Hex.textSecondary)
+                        }
+
+                        NavigationLink {
+                            AmbientSoundsView()
+                        } label: {
+                            Image(systemName: "waveform")
+                                .foregroundStyle(FloColors.Hex.textSecondary)
+                        }
+                    }
+                }
+        }
+    }
+}
+
+// MARK: - Habits Hub
+
+struct HabitsHubView: View {
+    @State private var showStats = false
+    @State private var showCategories = false
+
+    var body: some View {
+        NavigationStack {
+            HabitsView()
+                .toolbar {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        NavigationLink {
+                            HabitCategoriesView()
+                        } label: {
+                            Image(systemName: "square.grid.2x2")
+                                .foregroundStyle(FloColors.Hex.textSecondary)
+                        }
+                    }
+                }
+        }
+    }
 }

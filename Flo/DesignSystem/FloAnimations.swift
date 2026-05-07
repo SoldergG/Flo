@@ -13,10 +13,10 @@ enum FloAnimations {
     static let easeFast = Animation.easeOut(duration: 0.2)
 
     // MARK: - Transitions
-    static let slideUp = AnyTransition.move(edge: .bottom).combined(with: .opacity)
-    static let slideIn = AnyTransition.move(edge: .trailing).combined(with: .opacity)
-    static let fadeScale = AnyTransition.opacity.combined(with: .scale(scale: 0.9))
-    static let popIn = AnyTransition.scale(scale: 0.5).combined(with: .opacity)
+    nonisolated(unsafe) static let slideUp = AnyTransition.move(edge: .bottom).combined(with: .opacity)
+    nonisolated(unsafe) static let slideIn = AnyTransition.move(edge: .trailing).combined(with: .opacity)
+    nonisolated(unsafe) static let fadeScale = AnyTransition.opacity.combined(with: .scale(scale: 0.9))
+    nonisolated(unsafe) static let popIn = AnyTransition.scale(scale: 0.5).combined(with: .opacity)
 }
 
 // MARK: - Shimmer Effect

@@ -16,12 +16,32 @@ struct FloApp: App {
             NoteFolder.self,
             Habit.self,
             HabitCompletion.self,
-            FocusSession.self
+            FocusSession.self,
+            FocusPreset.self,
+            MoodEntry.self,
+            JournalEntry.self,
+            DailyScore.self,
+            SmartList.self
         ])
 
         #if os(macOS)
         Settings {
             SettingsView()
+                .modelContainer(for: [
+                    TaskItem.self,
+                    Project.self,
+                    Tag.self,
+                    Note.self,
+                    NoteFolder.self,
+                    Habit.self,
+                    HabitCompletion.self,
+                    FocusSession.self,
+                    FocusPreset.self,
+                    MoodEntry.self,
+                    JournalEntry.self,
+                    DailyScore.self,
+                    SmartList.self
+                ])
         }
         #endif
     }
