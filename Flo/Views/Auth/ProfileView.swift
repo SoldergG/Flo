@@ -40,26 +40,24 @@ struct ProfileView: View {
         return "Unknown"
     }
 
+    @State private var showAuthSheet = false
+
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                // MARK: - Avatar Section
-                avatarSection
-
-                // MARK: - Account Info
-                accountInfoSection
-
-                // MARK: - Sync Status
-                syncStatusSection
-
-                // MARK: - Actions
-                actionsSection
-
-                // MARK: - App Info
-                appInfoSection
-
-                // MARK: - Danger Zone
-                dangerZoneSection
+                if authManager.isAuthenticated {
+                    // Signed-in profile
+                    avatarSection
+                    accountInfoSection
+                    syncStatusSection
+                    actionsSection
+                    appInfoSection
+                    dangerZoneSection
+                } else {
+                    // Not signed in
+                    notSignedInSection
+                    appInfoSection
+                }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 24)
@@ -69,16 +67,20 @@ struct ProfileView: View {
         #if !os(macOS)
         .navigationBarTitleDisplayMode(.large)
         #endif
+        .sheet(isPresented: $showAuthSheet) {
+            AuthView()
+        }
         .alert("Sign Out", isPresented: $showSignOutAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Sign Out", role: .destructive) {
                 Task {
+                    // Sign out regardless of network errors
                     try? await authManager.signOut()
                     dismiss()
                 }
             }
         } message: {
-            Text("Are you sure you want to sign out? Your local data will remain on this device.")
+            Text("Are you sure you want to sign out?")
         }
         .alert("Delete Account", isPresented: $showDeleteAlert) {
             Button("Cancel", role: .cancel) {}
@@ -89,8 +91,39 @@ struct ProfileView: View {
                 }
             }
         } message: {
-            Text("This will permanently delete your cloud data. Local data will remain on this device. This action cannot be undone.")
+            Text("This will permanently delete your cloud data. This action cannot be undone.")
         }
+    }
+
+    // MARK: - Not Signed In Section
+
+    private var notSignedInSection: some View {
+        VStack(spacing: 20) {
+            ZStack {
+                Circle()
+                    .fill(FloColors.Hex.border.opacity(0.3))
+                    .frame(width: 88, height: 88)
+                Image(systemName: "person.crop.circle")
+                    .font(.system(size: 44))
+                    .foregroundStyle(FloColors.Hex.textTertiary)
+            }
+
+            VStack(spacing: 8) {
+                Text("Not signed in")
+                    .font(FloTypography.title3)
+                    .foregroundStyle(FloColors.Hex.textPrimary)
+                Text("Sign in to sync your data across devices and unlock Pro features.")
+                    .font(FloTypography.body)
+                    .foregroundStyle(FloColors.Hex.textSecondary)
+                    .multilineTextAlignment(.center)
+            }
+
+            FloButton("Sign In / Create Account", icon: "person.badge.key.fill") {
+                showAuthSheet = true
+            }
+            .padding(.horizontal, 8)
+        }
+        .padding(.vertical, 16)
     }
 
     // MARK: - Avatar Section

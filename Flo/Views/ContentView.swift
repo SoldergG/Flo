@@ -17,9 +17,6 @@ struct ContentView: View {
                         hasCompletedOnboarding = true
                     }
                 }
-            } else if !authManager.isAuthenticated && showAuth {
-                AuthView()
-                    .transition(FloAnimations.fadeScale)
             } else {
                 mainContent
             }
@@ -74,30 +71,27 @@ struct ContentView: View {
     #if os(macOS)
     private var macOSLayout: some View {
         NavigationSplitView {
-            List(AppTab.allCases, selection: $selectedTab) { tab in
-                Label(tab.label, systemImage: selectedTab == tab ? tab.selectedIcon : tab.icon)
-                    .foregroundStyle(selectedTab == tab ? FloColors.Hex.accent : FloColors.Hex.textSecondary)
-                    .tag(tab)
+            // Sidebar: keep everything inside the List to avoid constraint loops
+            List(selection: $selectedTab) {
+                Section {
+                    ForEach(AppTab.allCases) { tab in
+                        Label(tab.label, systemImage: selectedTab == tab ? tab.selectedIcon : tab.icon)
+                            .foregroundStyle(selectedTab == tab ? FloColors.Hex.accent : FloColors.Hex.textSecondary)
+                            .tag(tab)
+                    }
+                }
+
+                Section {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Label("Settings", systemImage: "gearshape")
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                    }
+                }
             }
             .listStyle(.sidebar)
             .navigationTitle("Flō")
-
-            Spacer()
-
-            // Pro upsell in sidebar for free users
-            if !store.isPro {
-                CompactPaywallBanner()
-                    .padding(.horizontal, 12)
-                    .padding(.bottom, 8)
-            }
-
-            NavigationLink {
-                SettingsView()
-            } label: {
-                Label("Settings", systemImage: "gearshape")
-                    .foregroundStyle(FloColors.Hex.textSecondary)
-            }
-            .padding()
         } detail: {
             switch selectedTab {
             case .planner: DailyPlannerView()

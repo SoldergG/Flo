@@ -14,8 +14,14 @@ final class FloAIService {
     var lastError: String?
 
     // Groq free API (generous free tier, fast inference)
-    private var activeAPIKey: String {
-        UserDefaults.standard.string(forKey: "groq_api_key") ?? "gsk_placeholder"
+    var activeAPIKey: String {
+        let key = UserDefaults.standard.string(forKey: "groq_api_key") ?? ""
+        return key.isEmpty ? "gsk_placeholder" : key
+    }
+
+    var hasAPIKey: Bool {
+        let key = UserDefaults.standard.string(forKey: "groq_api_key") ?? ""
+        return !key.isEmpty && key != "gsk_placeholder"
     }
     private let groqBaseURL = "https://api.groq.com/openai/v1/chat/completions"
     private let groqModel = "llama-3.3-70b-versatile"

@@ -72,6 +72,12 @@ struct AIAssistantView: View {
 
     // MARK: - Welcome Section
 
+    @AppStorage("groq_api_key") private var storedKey = ""
+
+    private var isAIReady: Bool {
+        !storedKey.isEmpty && storedKey != "gsk_placeholder"
+    }
+
     private var welcomeSection: some View {
         VStack(spacing: 20) {
             Spacer().frame(height: 40)
@@ -83,22 +89,47 @@ struct AIAssistantView: View {
 
                 Image(systemName: "bubble.left.and.bubble.right.fill")
                     .font(.system(size: 40))
-                    .foregroundStyle(FloColors.Hex.accent)
+                    .foregroundStyle(isAIReady ? FloColors.Hex.accent : FloColors.Hex.textTertiary)
             }
 
             VStack(spacing: 8) {
-                Text("Hi! I'm your Flo AI Assistant")
+                Text(isAIReady ? "Flo AI is ready" : "Set up AI to get started")
                     .font(FloTypography.title2)
                     .foregroundStyle(FloColors.Hex.textPrimary)
 
-                Text("Ask me anything about productivity, tasks, habits, or focus.")
+                Text(isAIReady
+                     ? "Ask me anything about your productivity, tasks, habits, or focus."
+                     : "Add a free Groq API key in Settings → AI Settings to use the real AI assistant.")
                     .font(FloTypography.body)
                     .foregroundStyle(FloColors.Hex.textSecondary)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
             }
 
-            // Quick actions
+            if !isAIReady {
+                // Prominent setup prompt
+                NavigationLink {
+                    AISettingsView()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "key.fill")
+                            .font(.system(size: 14))
+                        Text("Set up AI (free)")
+                            .font(FloTypography.subheadline.weight(.semibold))
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(FloColors.Hex.accent)
+                    .clipShape(Capsule())
+                }
+
+                Text("Powered by Groq · free tier · 14k req/day")
+                    .font(FloTypography.caption)
+                    .foregroundStyle(FloColors.Hex.textTertiary)
+            }
+
+            // Quick actions (always shown)
             VStack(spacing: 8) {
                 quickAction("Give me a productivity tip", icon: "lightbulb.fill")
                 quickAction("Suggest a daily plan", icon: "calendar")
