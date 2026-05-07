@@ -207,11 +207,11 @@ final class AppleSignInDelegate: NSObject, ASAuthorizationControllerDelegate, AS
     private var currentNonce: String?
 
     func signIn() async throws -> (idToken: String, nonce: String) {
-        try await withCheckedThrowingContinuation { continuation in
-            self.continuation = continuation
+        let nonce = try Self.randomNonceString()
+        currentNonce = nonce
 
-            let nonce = Self.randomNonceString()
-            currentNonce = nonce
+        return try await withCheckedThrowingContinuation { continuation in
+            self.continuation = continuation
 
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             let request = appleIDProvider.createRequest()
@@ -257,12 +257,16 @@ final class AppleSignInDelegate: NSObject, ASAuthorizationControllerDelegate, AS
 
     // MARK: - Nonce Helpers
 
-    static func randomNonceString(length: Int = 32) -> String {
+    enum NonceError: Error {
+        case generationFailed(OSStatus)
+    }
+
+    static func randomNonceString(length: Int = 32) throws -> String {
         precondition(length > 0)
         var randomBytes = [UInt8](repeating: 0, count: length)
         let errorCode = SecRandomCopyBytes(kSecRandomDefault, randomBytes.count, &randomBytes)
         guard errorCode == errSecSuccess else {
-            fatalError("Unable to generate nonce: \(errorCode)")
+            throw NonceError.generationFailed(errorCode)
         }
         let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         return String(randomBytes.map { charset[Int($0) % charset.count] })

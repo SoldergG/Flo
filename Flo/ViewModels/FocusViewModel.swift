@@ -3,7 +3,7 @@ import SwiftData
 import SwiftUI
 import Combine
 
-@Observable
+@MainActor @Observable
 final class FocusViewModel {
     var selectedDuration: FocusDuration = .medium
     var isRunning = false
@@ -52,7 +52,8 @@ final class FocusViewModel {
 
         let session = FocusSession(duration: selectedDuration.seconds, task: selectedTask)
         session.actualDuration = selectedDuration.seconds - timeRemaining
-        session.wasCompleted = timeRemaining <= 0
+        let completed = timeRemaining <= 0
+        session.wasCompleted = completed
         context.insert(session)
         try? context.save()
 
@@ -61,7 +62,7 @@ final class FocusViewModel {
         timeRemaining = 0
         sessionsToday += 1
 
-        if timeRemaining <= 0 {
+        if completed {
             showCompleted = true
         }
     }
@@ -76,12 +77,14 @@ final class FocusViewModel {
 
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self else { return }
-            if self.timeRemaining > 0 {
-                self.timeRemaining -= 1
-            } else {
-                self.timer?.invalidate()
-                self.timer = nil
+            Task { @MainActor in
+                guard let self else { return }
+                if self.timeRemaining > 0 {
+                    self.timeRemaining -= 1
+                } else {
+                    self.timer?.invalidate()
+                    self.timer = nil
+                }
             }
         }
     }

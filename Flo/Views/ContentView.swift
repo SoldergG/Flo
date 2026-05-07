@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var authManager = SupabaseManager.shared
     @State private var store = StoreKitManager.shared
     @State private var showAuth = false
+    @State private var showSearch = false
     @Namespace private var tabAnimation
 
     var body: some View {
@@ -70,6 +71,9 @@ struct ContentView: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
+        .sheet(isPresented: $showSearch) {
+            GlobalSearchView()
+        }
     }
     #endif
 
@@ -112,6 +116,9 @@ struct ContentView: View {
             }
         }
         .frame(minWidth: 900, minHeight: 600)
+        .sheet(isPresented: $showSearch) {
+            GlobalSearchView()
+        }
     }
     #endif
 }

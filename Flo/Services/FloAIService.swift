@@ -14,7 +14,9 @@ final class FloAIService {
     var lastError: String?
 
     // Groq free API (generous free tier, fast inference)
-    private let groqAPIKey = "gsk_placeholder" // User sets via settings
+    private var activeAPIKey: String {
+        UserDefaults.standard.string(forKey: "groq_api_key") ?? "gsk_placeholder"
+    }
     private let groqBaseURL = "https://api.groq.com/openai/v1/chat/completions"
     private let groqModel = "llama-3.3-70b-versatile"
 
@@ -35,7 +37,7 @@ final class FloAIService {
         defer { isProcessing = false }
 
         // Try Groq API first
-        if groqAPIKey != "gsk_placeholder" {
+        if activeAPIKey != "gsk_placeholder" {
             do {
                 return try await groqRequest(
                     prompt: prompt,
@@ -82,7 +84,7 @@ final class FloAIService {
 
         var request = URLRequest(url: URL(string: groqBaseURL)!)
         request.httpMethod = "POST"
-        request.setValue("Bearer \(groqAPIKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(activeAPIKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
         request.timeoutInterval = 30

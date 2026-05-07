@@ -4,8 +4,11 @@ struct SettingsView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = true
     @AppStorage("defaultFocusDuration") private var defaultFocusDuration = 25
     @AppStorage("notificationsEnabled") private var notificationsEnabled = true
+    @AppStorage("morningReminderEnabled") private var morningReminderEnabled = false
+    @AppStorage("eveningReminderEnabled") private var eveningReminderEnabled = false
     @State private var store = StoreKitManager.shared
     @State private var showPaywall = false
+    @State private var showWhatsNew = false
 
     var body: some View {
         NavigationStack {
@@ -114,6 +117,22 @@ struct SettingsView: View {
                         .listRowBackground(FloColors.Hex.surface)
                     }
 
+                    // MARK: - Personalization
+                    Section("Personalization") {
+                        NavigationLink {
+                            ThemePickerView()
+                        } label: {
+                            Label("Appearance", systemImage: "paintbrush.fill")
+                        }
+
+                        NavigationLink {
+                            AppIconView()
+                        } label: {
+                            Label("App Icon", systemImage: "app.badge.fill")
+                        }
+                    }
+                    .listRowBackground(FloColors.Hex.surface)
+
                     // MARK: - Focus
                     Section("Focus") {
                         Picker("Default Duration", selection: $defaultFocusDuration) {
@@ -126,6 +145,34 @@ struct SettingsView: View {
 
                         Toggle("Break Reminders", isOn: $notificationsEnabled)
                             .tint(FloColors.Hex.accent)
+                    }
+                    .listRowBackground(FloColors.Hex.surface)
+
+                    // MARK: - Notifications
+                    Section("Notifications") {
+                        Toggle(isOn: $morningReminderEnabled) {
+                            Label("Morning Check-in", systemImage: "sunrise.fill")
+                        }
+                        .tint(FloColors.Hex.accent)
+                        .onChange(of: morningReminderEnabled) { _, enabled in
+                            if enabled {
+                                NotificationManager.scheduleMorningReminder()
+                            } else {
+                                NotificationManager.cancelNotification(identifier: "morning-checkin")
+                            }
+                        }
+
+                        Toggle(isOn: $eveningReminderEnabled) {
+                            Label("Evening Review", systemImage: "moon.stars.fill")
+                        }
+                        .tint(FloColors.Hex.accent)
+                        .onChange(of: eveningReminderEnabled) { _, enabled in
+                            if enabled {
+                                NotificationManager.scheduleEveningReminder()
+                            } else {
+                                NotificationManager.cancelNotification(identifier: "evening-review")
+                            }
+                        }
                     }
                     .listRowBackground(FloColors.Hex.surface)
 
@@ -180,6 +227,18 @@ struct SettingsView: View {
                                     .foregroundStyle(FloColors.Hex.textTertiary)
                             }
                         }
+
+                        NavigationLink {
+                            DataExportView()
+                        } label: {
+                            Label("Export Data", systemImage: "square.and.arrow.up")
+                        }
+
+                        NavigationLink {
+                            AdvancedStatsView()
+                        } label: {
+                            Label("Statistics", systemImage: "chart.bar.fill")
+                        }
                     }
                     .listRowBackground(FloColors.Hex.surface)
 
@@ -190,6 +249,13 @@ struct SettingsView: View {
                             Spacer()
                             Text("1.0.0")
                                 .foregroundStyle(FloColors.Hex.textTertiary)
+                        }
+
+                        Button {
+                            showWhatsNew = true
+                        } label: {
+                            Label("What's New", systemImage: "sparkles")
+                                .foregroundStyle(FloColors.Hex.accent)
                         }
 
                         Button("Restore Purchases") {
@@ -215,6 +281,9 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
+            }
+            .sheet(isPresented: $showWhatsNew) {
+                WhatsNewView()
             }
         }
     }
