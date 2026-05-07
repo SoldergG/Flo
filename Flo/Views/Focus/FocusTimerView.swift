@@ -1,6 +1,8 @@
 import SwiftUI
 import SwiftData
 
+// MARK: - Focus Timer View
+
 struct FocusTimerView: View {
     @Environment(\.modelContext) private var context
     @State private var vm = FocusViewModel()
@@ -13,25 +15,26 @@ struct FocusTimerView: View {
                 FloColors.Hex.background.ignoresSafeArea()
 
                 ScrollView {
-                    VStack(spacing: 32) {
+                    VStack(spacing: 40) {
                         if vm.isRunning {
                             activeTimerView
                         } else {
                             setupView
                         }
-
                         todayStats
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 24)
+                    .padding(.bottom, 120)
                 }
             }
             .navigationTitle("Focus")
-            .onAppear {
-                vm.loadTodaySessions(context: context)
-            }
+            .onAppear { vm.loadTodaySessions(context: context) }
             .sheet(isPresented: $vm.showCompleted) {
-                FocusCompletedSheet(duration: vm.selectedDuration, sessionsToday: vm.sessionsToday)
+                FocusCompletedSheet(vm: vm, context: context)
+            }
+            .sheet(isPresented: $vm.showBreakCompleted) {
+                BreakCompletedSheet()
             }
         }
     }
@@ -39,84 +42,42 @@ struct FocusTimerView: View {
     // MARK: - Setup View
 
     private var setupView: some View {
-        VStack(spacing: 28) {
-            // Duration picker
-            VStack(spacing: 12) {
-                Text("Duration")
-                    .font(FloTypography.footnote)
-                    .foregroundStyle(FloColors.Hex.textSecondary)
-
-                HStack(spacing: 10) {
-                    ForEach(FocusDuration.allCases) { duration in
-                        Button {
-                            withAnimation(FloAnimations.springSnappy) {
-                                vm.selectedDuration = duration
-                            }
-                        } label: {
-                            Text(duration.label)
-                                .font(FloTypography.headline)
-                                .foregroundStyle(
-                                    vm.selectedDuration == duration ? .white : FloColors.Hex.textSecondary
-                                )
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(
-                                    vm.selectedDuration == duration
-                                        ? FloColors.Hex.accent
-                                        : FloColors.Hex.surface
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .strokeBorder(
-                                            vm.selectedDuration == duration
-                                                ? FloColors.Hex.accent
-                                                : FloColors.Hex.border,
-                                            lineWidth: 1
-                                        )
-                                )
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
+        VStack(spacing: 40) {
+            // Two dials: Work + Break
+            HStack(spacing: 24) {
+                TimerDialControl(
+                    minutes: $vm.workMinutes,
+                    maxMinutes: 120,
+                    label: "Focus",
+                    color: FloColors.Hex.accent,
+                    size: 160
+                )
+                TimerDialControl(
+                    minutes: $vm.breakMinutes,
+                    maxMinutes: 60,
+                    label: "Break",
+                    color: FloColors.Hex.success,
+                    size: 120
+                )
             }
 
-            // Preview ring
-            ZStack {
-                Circle()
-                    .stroke(FloColors.Hex.border.opacity(0.2), lineWidth: 8)
-                    .frame(width: 220, height: 220)
-
-                VStack(spacing: 4) {
-                    Text("\(vm.selectedDuration.rawValue)")
-                        .font(FloTypography.statNumber)
-                        .foregroundStyle(FloColors.Hex.textPrimary)
-                    Text("minutes")
-                        .font(FloTypography.caption)
-                        .foregroundStyle(FloColors.Hex.textTertiary)
-                }
-            }
-
-            // Task picker (optional)
+            // Optional task link
             if !activeTasks.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Link to task (optional)")
+                    Text("Link to task")
                         .font(FloTypography.footnote)
                         .foregroundStyle(FloColors.Hex.textSecondary)
-
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 8) {
                             FilterChip(label: "None", isSelected: vm.selectedTask == nil) {
                                 vm.selectedTask = nil
                             }
-                            ForEach(activeTasks.prefix(10)) { task in
+                            ForEach(activeTasks.prefix(8)) { task in
                                 FilterChip(
                                     label: task.title,
                                     isSelected: vm.selectedTask?.persistentModelID == task.persistentModelID,
                                     color: task.priority.color
-                                ) {
-                                    vm.selectedTask = task
-                                }
+                                ) { vm.selectedTask = task }
                             }
                         }
                     }
@@ -124,9 +85,7 @@ struct FocusTimerView: View {
             }
 
             FloButton("Start Focus", icon: "play.fill") {
-                withAnimation(FloAnimations.springDefault) {
-                    vm.startSession()
-                }
+                withAnimation(FloAnimations.springDefault) { vm.startSession() }
             }
         }
     }
@@ -134,59 +93,89 @@ struct FocusTimerView: View {
     // MARK: - Active Timer
 
     private var activeTimerView: some View {
-        VStack(spacing: 28) {
-            FloTimerRing(
-                progress: vm.progress,
-                timeRemaining: vm.timeRemaining,
-                size: 260
-            )
-            .animation(FloAnimations.easeFast, value: vm.timeRemaining)
+        VStack(spacing: 32) {
+            // Phase label
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(vm.phase == .breakTime ? FloColors.Hex.success : FloColors.Hex.accent)
+                    .frame(width: 8, height: 8)
+                Text(vm.phase == .breakTime ? "Break" : "Focus")
+                    .font(FloTypography.footnote)
+                    .foregroundStyle(FloColors.Hex.textSecondary)
+            }
 
-            if let task = vm.selectedTask {
-                HStack(spacing: 8) {
+            // Active progress ring
+            ActiveTimerRing(vm: vm)
+
+            // Task label
+            if let task = vm.selectedTask, vm.phase == .work {
+                HStack(spacing: 6) {
                     Image(systemName: "link")
-                        .font(.system(size: 12))
+                        .font(.system(size: 11))
                     Text(task.title)
                         .font(FloTypography.footnote)
+                        .lineLimit(1)
                 }
                 .foregroundStyle(FloColors.Hex.textSecondary)
                 .padding(.horizontal, 14)
-                .padding(.vertical, 8)
+                .padding(.vertical, 7)
                 .background(FloColors.Hex.surface)
                 .clipShape(Capsule())
             }
 
-            HStack(spacing: 16) {
-                // Reset
-                FloIconButton("stop.fill", size: 18, color: FloColors.Hex.textSecondary) {
+            // Controls
+            HStack(spacing: 20) {
+                // Stop
+                Button {
                     withAnimation(FloAnimations.springDefault) {
                         vm.stopSession(context: context)
                     }
+                } label: {
+                    Image(systemName: "stop.fill")
+                        .font(.system(size: 17))
+                        .foregroundStyle(FloColors.Hex.textSecondary)
+                        .frame(width: 52, height: 52)
+                        .background(FloColors.Hex.surface)
+                        .clipShape(Circle())
                 }
-                .frame(width: 56, height: 56)
-                .background(FloColors.Hex.surface)
-                .clipShape(Circle())
+                .buttonStyle(.plain)
 
-                // Play/Pause
+                // Play / Pause
                 Button {
                     withAnimation(FloAnimations.springSnappy) {
-                        if vm.isPaused {
-                            vm.resumeSession()
-                        } else {
-                            vm.pauseSession()
-                        }
+                        vm.isPaused ? vm.resumeSession() : vm.pauseSession()
                     }
                 } label: {
                     Image(systemName: vm.isPaused ? "play.fill" : "pause.fill")
-                        .font(.system(size: 24))
+                        .font(.system(size: 22))
                         .foregroundStyle(.white)
-                        .frame(width: 72, height: 72)
-                        .background(FloColors.Hex.accent)
+                        .frame(width: 68, height: 68)
+                        .background(vm.phase == .breakTime ? FloColors.Hex.success : FloColors.Hex.accent)
                         .clipShape(Circle())
-                        .shadow(color: FloColors.Hex.accent.opacity(0.3), radius: 8, y: 4)
+                        .shadow(color: (vm.phase == .breakTime ? FloColors.Hex.success : FloColors.Hex.accent).opacity(0.25), radius: 10, y: 4)
                 }
                 .buttonStyle(.plain)
                 .bounceOnTap()
+
+                // Skip (for break, skip back to work)
+                if vm.phase == .breakTime {
+                    Button {
+                        withAnimation(FloAnimations.springDefault) {
+                            vm.resetSession()
+                        }
+                    } label: {
+                        Image(systemName: "forward.end.fill")
+                            .font(.system(size: 17))
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                            .frame(width: 52, height: 52)
+                            .background(FloColors.Hex.surface)
+                            .clipShape(Circle())
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    // Placeholder for symmetry
+                    Color.clear.frame(width: 52, height: 52)
+                }
             }
         }
     }
@@ -195,21 +184,191 @@ struct FocusTimerView: View {
 
     private var todayStats: some View {
         FloCard {
-            HStack(spacing: 16) {
-                FloStatCard(
-                    title: "Sessions",
-                    value: "\(vm.sessionsToday)",
-                    icon: "flame.fill",
-                    color: FloColors.Hex.accent
-                )
-                FloStatCard(
-                    title: "Focus Time",
-                    value: "\(vm.sessionsToday * vm.selectedDuration.rawValue)m",
-                    icon: "clock.fill",
-                    color: FloColors.Hex.success
-                )
+            HStack(spacing: 0) {
+                statCell(title: "Sessions", value: "\(vm.sessionsToday)", icon: "flame.fill", color: FloColors.Hex.accent)
+                Divider().frame(height: 36)
+                statCell(title: "Focus time", value: "\(vm.sessionsToday * vm.workMinutes)m", icon: "clock.fill", color: FloColors.Hex.success)
+                Divider().frame(height: 36)
+                statCell(title: "Work", value: "\(vm.workMinutes)m", icon: "timer", color: FloColors.Hex.textSecondary)
             }
         }
+    }
+
+    private func statCell(title: String, value: String, icon: String, color: Color) -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundStyle(color)
+            Text(value)
+                .font(FloTypography.headline)
+                .foregroundStyle(FloColors.Hex.textPrimary)
+            Text(title)
+                .font(FloTypography.caption2)
+                .foregroundStyle(FloColors.Hex.textTertiary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Draggable Timer Dial
+
+struct TimerDialControl: View {
+    @Binding var minutes: Int
+    let maxMinutes: Int
+    let label: String
+    let color: Color
+    let size: CGFloat
+
+    @State private var isEditing = false
+    @State private var editText = ""
+    @FocusState private var fieldFocused: Bool
+
+    private var angle: Double {
+        // 0 min = -90° (top), maxMinutes = 270° (full circle)
+        let fraction = Double(minutes) / Double(maxMinutes)
+        return fraction * 360.0 - 90.0
+    }
+
+    var body: some View {
+        VStack(spacing: 10) {
+            ZStack {
+                // Track
+                Circle()
+                    .stroke(FloColors.Hex.border.opacity(0.25), lineWidth: 10)
+                    .frame(width: size, height: size)
+
+                // Progress arc
+                Circle()
+                    .trim(from: 0, to: Double(minutes) / Double(maxMinutes))
+                    .stroke(color, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                    .frame(width: size, height: size)
+                    .rotationEffect(.degrees(-90))
+                    .animation(FloAnimations.springSnappy, value: minutes)
+
+                // Center content
+                if isEditing {
+                    TextField("", text: $editText)
+                        .font(.system(size: size * 0.22, weight: .bold, design: .rounded))
+                        .foregroundStyle(FloColors.Hex.textPrimary)
+                        .multilineTextAlignment(.center)
+                        .focused($fieldFocused)
+                        #if os(iOS)
+                        .keyboardType(.numberPad)
+                        #endif
+                        .frame(width: size * 0.5)
+                        .onSubmit { commitEdit() }
+                        .onChange(of: editText) { _, v in
+                            if v.count > 3 { editText = String(v.prefix(3)) }
+                        }
+                } else {
+                    VStack(spacing: 2) {
+                        Text("\(minutes)")
+                            .font(.system(size: size * 0.28, weight: .bold, design: .rounded))
+                            .foregroundStyle(FloColors.Hex.textPrimary)
+                            .contentTransition(.numericText())
+                        Text("min")
+                            .font(.system(size: size * 0.11))
+                            .foregroundStyle(FloColors.Hex.textTertiary)
+                    }
+                    .onTapGesture { startEditing() }
+                }
+
+                // Drag handle dot
+                Circle()
+                    .fill(color)
+                    .frame(width: 16, height: 16)
+                    .shadow(color: color.opacity(0.4), radius: 4)
+                    .offset(y: -(size / 2))
+                    .rotationEffect(.degrees(angle + 90))
+                    .animation(FloAnimations.springSnappy, value: minutes)
+            }
+            .frame(width: size, height: size)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in handleDrag(value, size: size) }
+                    .onEnded { _ in HapticManager.trigger(.selection) }
+            )
+            .onTapGesture { if !isEditing { startEditing() } }
+
+            Text(label)
+                .font(FloTypography.caption)
+                .foregroundStyle(FloColors.Hex.textSecondary)
+        }
+        .onChange(of: fieldFocused) { _, focused in
+            if !focused { commitEdit() }
+        }
+    }
+
+    private func startEditing() {
+        editText = "\(minutes)"
+        isEditing = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            fieldFocused = true
+        }
+        HapticManager.trigger(.light)
+    }
+
+    private func commitEdit() {
+        if let v = Int(editText), v > 0 {
+            minutes = min(v, maxMinutes)
+        }
+        isEditing = false
+        fieldFocused = false
+        HapticManager.trigger(.light)
+    }
+
+    private func handleDrag(_ value: DragGesture.Value, size: CGFloat) {
+        let center = CGSize(width: size / 2, height: size / 2)
+        let dx = value.location.x - center.width
+        let dy = value.location.y - center.height
+        var angle = atan2(dy, dx) * (180 / .pi) + 90
+        if angle < 0 { angle += 360 }
+        let fraction = angle / 360.0
+        let newMinutes = max(1, Int(fraction * Double(maxMinutes)))
+        if newMinutes != minutes {
+            minutes = newMinutes
+            HapticManager.trigger(.selection)
+        }
+    }
+}
+
+// MARK: - Active Timer Ring
+
+private struct ActiveTimerRing: View {
+    let vm: FocusViewModel
+    private let size: CGFloat = 240
+
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(FloColors.Hex.border.opacity(0.15), lineWidth: 12)
+                .frame(width: size, height: size)
+
+            Circle()
+                .trim(from: 0, to: vm.progress)
+                .stroke(
+                    vm.phase == .breakTime ? FloColors.Hex.success : FloColors.Hex.accent,
+                    style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                )
+                .frame(width: size, height: size)
+                .rotationEffect(.degrees(-90))
+                .animation(.linear(duration: 1), value: vm.progress)
+
+            VStack(spacing: 4) {
+                Text(vm.formattedTime)
+                    .font(.system(size: 48, weight: .semibold, design: .rounded))
+                    .foregroundStyle(FloColors.Hex.textPrimary)
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
+
+                if vm.isPaused {
+                    Text("Paused")
+                        .font(FloTypography.caption)
+                        .foregroundStyle(FloColors.Hex.textTertiary)
+                }
+            }
+        }
+        .frame(width: size, height: size)
     }
 }
 
@@ -217,54 +376,84 @@ struct FocusTimerView: View {
 
 struct FocusCompletedSheet: View {
     @Environment(\.dismiss) private var dismiss
-    let duration: FocusDuration
-    let sessionsToday: Int
+    let vm: FocusViewModel
+    let context: ModelContext
     @State private var showConfetti = false
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 28) {
             Spacer()
 
             ZStack {
                 Circle()
-                    .fill(FloColors.Hex.success.opacity(0.15))
-                    .frame(width: 120, height: 120)
-
+                    .fill(FloColors.Hex.success.opacity(0.12))
+                    .frame(width: 110, height: 110)
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 56))
+                    .font(.system(size: 52))
                     .foregroundStyle(FloColors.Hex.success)
                     .symbolEffect(.bounce, value: showConfetti)
             }
             .confetti(isActive: $showConfetti)
 
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Text("Well done!")
                     .font(FloTypography.title)
                     .foregroundStyle(FloColors.Hex.textPrimary)
-
-                Text("You completed a \(duration.rawValue) minute focus session.")
+                Text("You focused for \(vm.workMinutes) minutes.")
                     .font(FloTypography.body)
                     .foregroundStyle(FloColors.Hex.textSecondary)
-                    .multilineTextAlignment(.center)
             }
 
-            Text("Session #\(sessionsToday) today")
+            Text("Session #\(vm.sessionsToday) today")
                 .font(FloTypography.footnote)
                 .foregroundStyle(FloColors.Hex.textTertiary)
 
             Spacer()
 
-            FloButton("Done", style: .primary) {
-                dismiss()
+            VStack(spacing: 12) {
+                FloButton("Take a \(vm.breakMinutes)m Break", icon: "cup.and.saucer.fill", style: .secondary) {
+                    vm.startBreak()
+                    dismiss()
+                }
+                FloButton("Done", style: .primary) {
+                    vm.stopSession(context: context)
+                    dismiss()
+                }
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 40)
         }
         .background(FloColors.Hex.background.ignoresSafeArea())
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                showConfetti = true
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { showConfetti = true }
         }
+    }
+}
+
+// MARK: - Break Completed Sheet
+
+struct BreakCompletedSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(spacing: 28) {
+            Spacer()
+            Image(systemName: "bolt.fill")
+                .font(.system(size: 52))
+                .foregroundStyle(FloColors.Hex.warning)
+            VStack(spacing: 6) {
+                Text("Break done!")
+                    .font(FloTypography.title)
+                    .foregroundStyle(FloColors.Hex.textPrimary)
+                Text("Ready to get back in the zone?")
+                    .font(FloTypography.body)
+                    .foregroundStyle(FloColors.Hex.textSecondary)
+            }
+            Spacer()
+            FloButton("Let's go", icon: "play.fill", style: .primary) { dismiss() }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 40)
+        }
+        .background(FloColors.Hex.background.ignoresSafeArea())
     }
 }

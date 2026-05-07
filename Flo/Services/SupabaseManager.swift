@@ -247,8 +247,10 @@ final class AppleSignInDelegate: NSObject, ASAuthorizationControllerDelegate, AS
         #if os(macOS)
         return NSApplication.shared.keyWindow ?? NSWindow()
         #else
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = scene.windows.first else {
+        guard let scene = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .first(where: { $0.activationState == .foregroundActive }),
+              let window = scene.windows.first(where: \.isKeyWindow) ?? scene.windows.first else {
             return UIWindow()
         }
         return window

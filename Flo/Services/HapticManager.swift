@@ -13,6 +13,7 @@ enum HapticManager {
         case selection
     }
 
+    @MainActor
     static func trigger(_ type: HapticType) {
         #if os(iOS)
         switch type {

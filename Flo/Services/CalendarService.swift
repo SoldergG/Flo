@@ -28,7 +28,7 @@ enum CalendarService {
 
     static var hasAccess: Bool {
         let status = EKEventStore.authorizationStatus(for: .event)
-        return status == .fullAccess || status == .authorized
+        return status == .fullAccess
     }
 
     // MARK: - Create Recurring Habit Event

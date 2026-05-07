@@ -44,6 +44,7 @@ enum QuickAction: String {
         }
     }
 
+    @MainActor
     static func registerAll() {
         UIApplication.shared.shortcutItems = [
             QuickAction.newTask.shortcutItem,

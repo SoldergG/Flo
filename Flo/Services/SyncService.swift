@@ -406,7 +406,7 @@ final class SyncService {
             }
         }
 
-        await channel.subscribe()
+        try? await channel.subscribeWithError()
         realtimeChannel = channel
     }
 

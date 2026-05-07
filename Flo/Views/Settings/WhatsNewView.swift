@@ -175,7 +175,7 @@ struct WhatsNewView: View {
 
     private func animateItems() {
         for i in features.indices {
-            withAnimation(FloAnimations.springDefault.delay(Double(i) * 0.08)) {
+            _ = withAnimation(FloAnimations.springDefault.delay(Double(i) * 0.08)) {
                 animatedItems.insert(i)
             }
         }
