@@ -129,6 +129,7 @@
 		A75E7B52968887B0CE16AB34 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEC391D367031591AC18D79 /* Tag.swift */; };
 		A790FCEC6C7FF1474054C26D /* AdvancedStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F8D77D54D53EB1CD5B818E /* AdvancedStatsView.swift */; };
 		A8789D60BC3CA5B4A0BAF2C2 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C2DE48E6EB2BF76F26D2CB /* AuthView.swift */; };
+		A8FD074877133D67EF381F90 /* CrossPlatformModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60DE5251F98B71C4AFF5E44 /* CrossPlatformModifiers.swift */; };
 		AB4041743D68F31958A016A8 /* DailyScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323852B755EA4A6C8C39F8CE /* DailyScore.swift */; };
 		ABCBB73A966A9A6A03C96F19 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F4CAC06D07E29C6090E45E /* Habit.swift */; };
 		ABF289F1D7EFC5639A93FF1C /* EisenhowerMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD15676B85B4C92ED8F1CE2 /* EisenhowerMatrixView.swift */; };
@@ -173,6 +174,7 @@
 		DE06244DFD273DB6D72043E9 /* TaskStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73D96BBB61336B06A593CD /* TaskStatsView.swift */; };
 		DE2B6801CD064074C431C5DD /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5835F7E6E742728CB7D59FE /* WhatsNewView.swift */; };
 		DFE8D679CD1EAF2A41BBB814 /* AdvancedStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F8D77D54D53EB1CD5B818E /* AdvancedStatsView.swift */; };
+		E12AAF181D9DF6EB64BB7FCD /* CrossPlatformModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60DE5251F98B71C4AFF5E44 /* CrossPlatformModifiers.swift */; };
 		E3B8E7EA0CF7E3524304036E /* FloEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC522C35DC6889867E09C0C6 /* FloEmptyState.swift */; };
 		E590EBDCE812EC9D3515CB19 /* ProductivityScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6233E1A354018E74B6D01954 /* ProductivityScoreView.swift */; };
 		E8755B0245D92CF4941AC098 /* SmartListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967EADC9D67E7134A88FD44 /* SmartListsView.swift */; };
@@ -283,6 +285,7 @@
 		CC522C35DC6889867E09C0C6 /* FloEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloEmptyState.swift; sourceTree = "<group>"; };
 		D0E187E78D4C18D3BEE735B3 /* FocusLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusLiveActivity.swift; sourceTree = "<group>"; };
 		D159A6D0B97320DD617C001D /* EditHabitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitSheet.swift; sourceTree = "<group>"; };
+		D60DE5251F98B71C4AFF5E44 /* CrossPlatformModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatformModifiers.swift; sourceTree = "<group>"; };
 		D7C565C42C6FEFAE3C89451D /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		DB7566C5A2B1007346EFD106 /* TodaySummaryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodaySummaryWidget.swift; sourceTree = "<group>"; };
 		E4F45CEBE0BCDF47142499C5 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
@@ -397,6 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				F710572449AB2C5FCB431974 /* Components */,
+				D60DE5251F98B71C4AFF5E44 /* CrossPlatformModifiers.swift */,
 				9262C97D485427344A4C25AC /* FloAnimations.swift */,
 				09020E6BAA0A88AE9A1E94AA /* FloColors.swift */,
 				CC522C35DC6889867E09C0C6 /* FloEmptyState.swift */,
@@ -809,6 +813,7 @@
 				860392EAE483D34D5A1982FB /* AuthView.swift in Sources */,
 				5839E36CA776A72146B91801 /* CalendarService.swift in Sources */,
 				6CF2FFA519700BE0C67E7735 /* ContentView.swift in Sources */,
+				E12AAF181D9DF6EB64BB7FCD /* CrossPlatformModifiers.swift in Sources */,
 				DD780213A881A6B99C25BB1B /* DailyPlannerView.swift in Sources */,
 				AB4041743D68F31958A016A8 /* DailyScore.swift in Sources */,
 				7F12172E2377607839E90F13 /* DataExportView.swift in Sources */,
@@ -913,6 +918,7 @@
 				A8789D60BC3CA5B4A0BAF2C2 /* AuthView.swift in Sources */,
 				6C0954BDA7163C51D02E15AC /* CalendarService.swift in Sources */,
 				9E3002AD8D1D5C667A83ED58 /* ContentView.swift in Sources */,
+				A8FD074877133D67EF381F90 /* CrossPlatformModifiers.swift in Sources */,
 				228D9E518BD7732A4A7CE823 /* DailyPlannerView.swift in Sources */,
 				BF81986168EAABD196E455C0 /* DailyScore.swift in Sources */,
 				BF03B18EB6730665993C370D /* DataExportView.swift in Sources */,

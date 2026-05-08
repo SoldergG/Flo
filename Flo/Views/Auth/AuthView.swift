@@ -62,7 +62,7 @@ struct AuthView: View {
                         .frame(height: 40)
                 }
             }
-            .scrollDismissesKeyboard(.interactively)
+            .floScrollDismissesKeyboard()
 
             // Loading overlay
             if authManager.isLoading {

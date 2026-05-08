@@ -69,42 +69,164 @@ struct ContentView: View {
     // MARK: - macOS Layout
 
     #if os(macOS)
-    private var macOSLayout: some View {
-        NavigationSplitView {
-            // Sidebar: keep everything inside the List to avoid constraint loops
-            List(selection: $selectedTab) {
-                Section {
-                    ForEach(AppTab.allCases) { tab in
-                        Label(tab.label, systemImage: selectedTab == tab ? tab.selectedIcon : tab.icon)
-                            .foregroundStyle(selectedTab == tab ? FloColors.Hex.accent : FloColors.Hex.textSecondary)
-                            .tag(tab)
-                    }
-                }
+    @State private var macDestination: MacDestination = .planner
 
-                Section {
-                    NavigationLink {
-                        SettingsView()
-                    } label: {
-                        Label("Settings", systemImage: "gearshape")
-                            .foregroundStyle(FloColors.Hex.textSecondary)
-                    }
-                }
-            }
-            .listStyle(.sidebar)
-            .navigationTitle("Flō")
+    private var macOSLayout: some View {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
+            macSidebar
         } detail: {
-            switch selectedTab {
-            case .planner: DailyPlannerView()
-            case .tasks: TasksHubView()
-            case .focus: FocusHubView()
-            case .habits: HabitsHubView()
-            case .notes: NotesView()
-            }
+            macDetail
         }
-        .frame(minWidth: 900, minHeight: 600)
+        .frame(minWidth: 980, minHeight: 640)
         .sheet(isPresented: $showSearch) {
             GlobalSearchView()
         }
+    }
+
+    // MARK: - macOS Sidebar (full feature parity with iOS)
+
+    private var macSidebar: some View {
+        List(selection: $macDestination) {
+
+            // MARK: Today
+            Section("Today") {
+                macItem(.planner,     "Daily Planner",       "calendar")
+                macItem(.productivity, "Productivity Score",  "chart.line.uptrend.xyaxis")
+                macItem(.weekly,       "Weekly Planner",      "calendar.badge.clock")
+                macItem(.morning,      "Morning Check-In",    "sun.max.fill")
+                macItem(.evening,      "Evening Review",      "moon.stars.fill")
+                macItem(.journal,      "Journal",             "book.closed.fill")
+                macItem(.aiBriefing,   "AI Briefing",         "sparkles")
+            }
+
+            // MARK: Tasks
+            Section("Tasks") {
+                macItem(.tasks,        "All Tasks",           "checkmark.circle")
+                macItem(.kanban,       "Kanban Board",        "rectangle.split.3x1")
+                macItem(.matrix,       "Priority Matrix",     "square.grid.2x2")
+                macItem(.taskCal,      "Calendar",            "calendar")
+                macItem(.smartLists,   "Smart Lists",         "sparkles")
+                macItem(.taskStats,    "Statistics",          "chart.bar.fill")
+                macItem(.templates,    "Templates",           "doc.on.doc")
+            }
+
+            // MARK: Focus
+            Section("Focus") {
+                macItem(.focus,        "Timer",               "timer")
+                macItem(.ambient,      "Ambient Sounds",      "waveform")
+                macItem(.presets,      "Presets",             "slider.horizontal.3")
+                macItem(.focusHist,    "History",             "clock.arrow.circlepath")
+                macItem(.focusReport,  "Report",              "chart.bar")
+            }
+
+            // MARK: Habits
+            Section("Habits") {
+                macItem(.habits,       "All Habits",          "flame")
+                macItem(.habitCats,    "Categories",          "square.grid.2x2")
+            }
+
+            // MARK: Notes
+            Section("Notes") {
+                macItem(.notes,        "Notes",               "note.text")
+            }
+
+            // MARK: AI
+            Section("AI") {
+                macItem(.aiChat,       "AI Assistant",        "bubble.left.and.bubble.right.fill")
+                macItem(.aiFeatures,   "All Features",        "sparkles")
+                macItem(.aiSettings,   "AI Settings",         "key.fill")
+            }
+
+            // MARK: Account
+            Section("Account") {
+                macItem(.profile,      "Profile & Sync",      "person.circle")
+                macItem(.settings,     "Settings",            "gearshape")
+                macItem(.stats,        "Advanced Stats",      "chart.xyaxis.line")
+                macItem(.export,       "Export Data",         "square.and.arrow.up")
+            }
+        }
+        .listStyle(.sidebar)
+        .navigationTitle("Flō")
+    }
+
+    private func macItem(_ dest: MacDestination, _ label: String, _ icon: String) -> some View {
+        Label(label, systemImage: macDestination == dest ? selectedIconFor(dest, icon) : icon)
+            .tag(dest)
+    }
+
+    private func selectedIconFor(_ dest: MacDestination, _ icon: String) -> String {
+        // Return filled variant for selected state
+        let filled = icon + ".fill"
+        return icon
+    }
+
+    // MARK: - macOS Detail (all views, no nested NavigationStack)
+
+    @ViewBuilder
+    private var macDetail: some View {
+        switch macDestination {
+        // Today
+        case .planner:      DailyPlannerView()
+        case .productivity: ProductivityScoreView()
+        case .weekly:       WeeklyPlannerView()
+        case .morning:      MorningCheckInView()
+        case .evening:      EveningReviewView()
+        case .journal:      JournalView()
+        case .aiBriefing:   AIDailyBriefingView()
+
+        // Tasks
+        case .tasks:        TasksView()
+        case .kanban:       KanbanBoardView()
+        case .matrix:       EisenhowerMatrixView()
+        case .taskCal:      TaskCalendarView()
+        case .smartLists:   SmartListsView()
+        case .taskStats:    TaskStatsView()
+        case .templates:    TaskTemplatesView()
+
+        // Focus
+        case .focus:        FocusTimerView()
+        case .ambient:      AmbientSoundsView()
+        case .presets:      FocusPresetsView()
+        case .focusHist:    FocusHistoryView()
+        case .focusReport:  FocusReportView()
+
+        // Habits
+        case .habits:       HabitsView()
+        case .habitCats:    HabitCategoriesView()
+
+        // Notes
+        case .notes:        NotesView()
+
+        // AI
+        case .aiChat:       AIAssistantView()
+        case .aiFeatures:   AIFeaturesHubView()
+        case .aiSettings:   AISettingsView()
+
+        // Account
+        case .profile:      ProfileView()
+        case .settings:     SettingsView()
+        case .stats:        AdvancedStatsView()
+        case .export:       DataExportView()
+        }
+    }
+
+    // MARK: - Mac Destination Enum
+
+    enum MacDestination: Hashable {
+        // Today
+        case planner, productivity, weekly, morning, evening, journal, aiBriefing
+        // Tasks
+        case tasks, kanban, matrix, taskCal, smartLists, taskStats, templates
+        // Focus
+        case focus, ambient, presets, focusHist, focusReport
+        // Habits
+        case habits, habitCats
+        // Notes
+        case notes
+        // AI
+        case aiChat, aiFeatures, aiSettings
+        // Account
+        case profile, settings, stats, export
     }
     #endif
 }
