@@ -4,3 +4,5 @@ DerivedData/
 .DS_Store
 *.xcworkspace
 *.xcuserstate
+build_dir/
+build_mac/
