@@ -14,6 +14,10 @@ struct GlobalSearchView: View {
     @State private var searchText = ""
     @State private var selectedFilter: SearchFilter = .all
     @FocusState private var isSearchFocused: Bool
+    // FIX #70: state for navigating to search results
+    @State private var editingTask: TaskItem?
+    @State private var editingNote: JournalEntry?
+    @State private var openNote: Note?
 
     enum SearchFilter: String, CaseIterable {
         case all, tasks, notes, habits
@@ -58,6 +62,9 @@ struct GlobalSearchView: View {
                 }
             }
             .onAppear { isSearchFocused = true }
+            // FIX #73: sheets for navigating to search results
+            .sheet(item: $editingTask) { task in TaskDetailView(task: task) }
+            .sheet(item: $openNote) { note in NoteEditorSheet(note: note) }
         }
     }
 
@@ -164,7 +171,13 @@ struct GlobalSearchView: View {
             if !matchingTasks.isEmpty && (selectedFilter == .all || selectedFilter == .tasks) {
                 Section {
                     ForEach(matchingTasks.prefix(10)) { task in
-                        TaskSearchRow(task: task, searchText: searchText)
+                        // FIX #71: tap to open task detail
+                        Button {
+                            editingTask = task
+                        } label: {
+                            TaskSearchRow(task: task, searchText: searchText)
+                        }
+                        .buttonStyle(.plain)
                     }
                 } header: {
                     Label("Tasks (\(matchingTasks.count))", systemImage: "checkmark.circle")
@@ -176,7 +189,11 @@ struct GlobalSearchView: View {
             if !matchingNotes.isEmpty && (selectedFilter == .all || selectedFilter == .notes) {
                 Section {
                     ForEach(matchingNotes.prefix(10)) { note in
-                        NoteSearchRow(note: note, searchText: searchText)
+                        // FIX #72: tap to open note
+                        Button { openNote = note } label: {
+                            NoteSearchRow(note: note, searchText: searchText)
+                        }
+                        .buttonStyle(.plain)
                     }
                 } header: {
                     Label("Notes (\(matchingNotes.count))", systemImage: "note.text")

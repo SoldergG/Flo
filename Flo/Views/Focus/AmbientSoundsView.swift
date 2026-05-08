@@ -1,10 +1,13 @@
 import SwiftUI
 
+// MARK: - Ambient Sounds View (FIX #24: real audio via AmbientAudioManager)
+
 struct AmbientSoundsView: View {
     @State private var sounds = AmbientSoundItem.allSounds
     @State private var masterVolume: Double = 0.7
     @State private var isAnyPlaying: Bool = false
     @Environment(\.dismiss) private var dismiss
+    private let audio = AmbientAudioManager.shared
 
     var body: some View {
         NavigationStack {
@@ -108,6 +111,12 @@ struct AmbientSoundsView: View {
         return Button {
             withAnimation(FloAnimations.springBouncy) {
                 sound.wrappedValue.isPlaying.toggle()
+                // FIX #25: actually play/stop audio
+                if sound.wrappedValue.isPlaying {
+                    audio.play(s.name, type: AmbientAudioManager.soundType(for: s.name), volume: Float(s.volume))
+                } else {
+                    audio.stop(s.name)
+                }
                 updatePlayingState()
             }
         } label: {
@@ -189,6 +198,7 @@ struct AmbientSoundsView: View {
 
                     Slider(value: $masterVolume, in: 0...1)
                         .tint(FloColors.Hex.accent)
+                        .onChange(of: masterVolume) { _, _ in updateMasterVolume() }
 
                     Image(systemName: "speaker.wave.3.fill")
                         .font(.system(size: 14))
@@ -208,7 +218,13 @@ struct AmbientSoundsView: View {
         for i in sounds.indices {
             sounds[i].isPlaying = false
         }
+        audio.stopAll() // FIX #26: stop real audio engine
         isAnyPlaying = false
+    }
+
+    // FIX #27: master volume controls real audio
+    private func updateMasterVolume() {
+        audio.masterVolume = Float(masterVolume)
     }
 }
 

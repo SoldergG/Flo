@@ -6,6 +6,7 @@ import SwiftUI
 final class TaskViewModel {
     var showingAddTask = false
     var showingAddProject = false
+    var editingTask: TaskItem? // FIX #40: track task being edited
     var selectedProject: Project?
     var searchText = ""
     var sortByPriority = false

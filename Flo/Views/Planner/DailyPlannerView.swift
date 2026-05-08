@@ -35,18 +35,19 @@ struct DailyPlannerView: View {
             .navigationTitle("Today")
             .toolbar {
                 ToolbarItemGroup(placement: .primaryAction) {
+                    // FIX #55: global search button
+                    NavigationLink {
+                        GlobalSearchView()
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundStyle(FloColors.Hex.textSecondary)
+                    }
+
                     NavigationLink {
                         AIDailyBriefingView()
                     } label: {
                         Image(systemName: "sparkles")
                             .foregroundStyle(FloColors.Hex.accent)
-                    }
-
-                    NavigationLink {
-                        WeeklyPlannerView()
-                    } label: {
-                        Image(systemName: "calendar.badge.clock")
-                            .foregroundStyle(FloColors.Hex.textSecondary)
                     }
 
                     NavigationLink {

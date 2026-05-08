@@ -92,7 +92,8 @@ struct KanbanBoardView: View {
                 LazyVStack(spacing: 10) {
                     ForEach(columnTasks) { task in
                         kanbanCard(task, color: column.color)
-                            .draggable(task.title)
+                            // FIX #65: use model ID instead of title for drag (prevents duplicate-title bug)
+                            .draggable(task.persistentModelID.hashValue.description)
                     }
 
                     if columnTasks.isEmpty {
@@ -117,8 +118,9 @@ struct KanbanBoardView: View {
                 .strokeBorder(FloColors.Hex.border.opacity(0.5), lineWidth: 1)
         )
         .dropDestination(for: String.self) { items, _ in
-            guard let title = items.first,
-                  let task = tasks.first(where: { $0.title == title }) else { return false }
+            // FIX #66: match by hash ID, not title
+            guard let hashStr = items.first,
+                  let task = tasks.first(where: { $0.persistentModelID.hashValue.description == hashStr }) else { return false }
             withAnimation(FloAnimations.springDefault) {
                 moveTask(task, to: column.id)
             }
@@ -183,32 +185,20 @@ struct KanbanBoardView: View {
 
     // MARK: - Helpers
 
+    // FIX #67: use kanbanStatus field (designed for this purpose)
     private func tasksForColumn(_ status: String) -> [TaskItem] {
-        switch status {
-        case "done":
-            return tasks.filter { $0.isCompleted }
-        case "in_progress":
-            // Tasks that are not completed and have a scheduled date of today
-            return tasks.filter { !$0.isCompleted && $0.scheduledDate != nil }
-        default:
-            // To Do: not completed and no scheduled date
-            return tasks.filter { !$0.isCompleted && $0.scheduledDate == nil }
-        }
+        tasks.filter { $0.kanbanStatus == status }
     }
 
     private func moveTask(_ task: TaskItem, to column: String) {
+        task.kanbanStatus = column
         switch column {
         case "done":
             task.isCompleted = true
             task.completedAt = .now
-        case "in_progress":
-            task.isCompleted = false
-            task.completedAt = nil
-            task.scheduledDate = .now
         default:
             task.isCompleted = false
             task.completedAt = nil
-            task.scheduledDate = nil
         }
         try? context.save()
     }

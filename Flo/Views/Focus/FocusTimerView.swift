@@ -9,33 +9,41 @@ struct FocusTimerView: View {
     @Query(filter: #Predicate<TaskItem> { !$0.isCompleted }, sort: \TaskItem.createdAt)
     private var activeTasks: [TaskItem]
 
-    var body: some View {
-        NavigationStack {
-            ZStack {
-                FloColors.Hex.background.ignoresSafeArea()
+    // FIX #59: read defaultFocusDuration from AppStorage
+    @AppStorage("defaultFocusDuration") private var defaultFocusDuration = 25
 
-                ScrollView {
-                    VStack(spacing: 40) {
-                        if vm.isRunning {
-                            activeTimerView
-                        } else {
-                            setupView
-                        }
-                        todayStats
+    var body: some View {
+        // FIX #60: remove inner NavigationStack (FocusHubView already has one)
+        ZStack {
+            FloColors.Hex.background.ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 40) {
+                    if vm.isRunning {
+                        activeTimerView
+                    } else {
+                        setupView
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 24)
-                    .padding(.bottom, 120)
+                    todayStatsReal
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, 24)
+                .padding(.bottom, 120)
             }
-            .navigationTitle("Focus")
-            .onAppear { vm.loadTodaySessions(context: context) }
-            .sheet(isPresented: $vm.showCompleted) {
-                FocusCompletedSheet(vm: vm, context: context)
+        }
+        .navigationTitle("Focus")
+        .onAppear {
+            vm.loadTodaySessions(context: context)
+            // FIX #61: apply defaultFocusDuration from settings
+            if vm.workMinutes == 25 {
+                vm.workMinutes = defaultFocusDuration
             }
-            .sheet(isPresented: $vm.showBreakCompleted) {
-                BreakCompletedSheet()
-            }
+        }
+        .sheet(isPresented: $vm.showCompleted) {
+            FocusCompletedSheet(vm: vm, context: context)
+        }
+        .sheet(isPresented: $vm.showBreakCompleted) {
+            BreakCompletedSheet()
         }
     }
 
@@ -180,16 +188,22 @@ struct FocusTimerView: View {
         }
     }
 
-    // MARK: - Today Stats
+    // FIX #62: use real session data for stats
+    @Query private var allSessions: [FocusSession]
 
-    private var todayStats: some View {
-        FloCard {
+    private var todayStatsReal: some View {
+        let today = Calendar.current.startOfDay(for: .now)
+        let todaySessions = allSessions.filter { $0.startedAt >= today }
+        let totalMinutes = Int(todaySessions.reduce(0) { $0 + ($1.actualDuration ?? $1.duration) } / 60)
+        let completed = todaySessions.filter(\.wasCompleted).count
+
+        return FloCard {
             HStack(spacing: 0) {
-                statCell(title: "Sessions", value: "\(vm.sessionsToday)", icon: "flame.fill", color: FloColors.Hex.accent)
+                statCell(title: "Sessions", value: "\(todaySessions.count)", icon: "flame.fill", color: FloColors.Hex.accent)
                 Divider().frame(height: 36)
-                statCell(title: "Focus time", value: "\(vm.sessionsToday * vm.workMinutes)m", icon: "clock.fill", color: FloColors.Hex.success)
+                statCell(title: "Focus time", value: "\(totalMinutes)m", icon: "clock.fill", color: FloColors.Hex.success)
                 Divider().frame(height: 36)
-                statCell(title: "Work", value: "\(vm.workMinutes)m", icon: "timer", color: FloColors.Hex.textSecondary)
+                statCell(title: "Completed", value: "\(completed)", icon: "checkmark.circle.fill", color: FloColors.Hex.textSecondary)
             }
         }
     }

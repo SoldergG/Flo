@@ -3,7 +3,14 @@ import SwiftUI
 // MARK: - App Icon Chooser
 
 struct AppIconView: View {
-    @State private var selectedIcon: String = "Default"
+    // FIX #68: read actual current icon from UIApplication instead of @State "Default"
+    @State private var selectedIcon: String = {
+        #if os(iOS)
+        return UIApplication.shared.alternateIconName ?? "Default"
+        #else
+        return "Default"
+        #endif
+    }()
     @State private var showConfirmation = false
 
     private let icons: [AppIconOption] = [
@@ -24,14 +31,9 @@ struct AppIconView: View {
                     } label: {
                         HStack(spacing: 16) {
                             // Icon preview
+                            // FIX #69: flat color, no gradient
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(
-                                    LinearGradient(
-                                        colors: [icon.previewColor, icon.previewColor.opacity(0.7)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .fill(icon.previewColor)
                                 .frame(width: 60, height: 60)
                                 .overlay {
                                     Text("F")

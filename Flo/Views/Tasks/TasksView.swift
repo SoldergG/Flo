@@ -30,6 +30,10 @@ struct TasksView: View {
             .sheet(isPresented: $vm.showingAddTask) {
                 AddTaskSheet(vm: vm, projects: projects)
             }
+            // FIX #41: open task detail/edit sheet
+            .sheet(item: $vm.editingTask) { task in
+                TaskDetailView(task: task)
+            }
             .sheet(isPresented: $vm.showingAddProject) {
                 AddProjectSheet(vm: vm)
             }
@@ -117,8 +121,34 @@ struct TasksView: View {
                 if !activeTasks.isEmpty {
                     Section {
                         ForEach(activeTasks) { task in
+                            // FIX #38: tap opens task detail, swipe actions
                             TaskRow(task: task) {
                                 vm.toggleComplete(task, context: context)
+                            }
+                            .onTapGesture { vm.editingTask = task }
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                Button {
+                                    vm.toggleComplete(task, context: context)
+                                } label: {
+                                    Label("Done", systemImage: "checkmark.circle.fill")
+                                }
+                                .tint(FloColors.Hex.success)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                                Button(role: .destructive) {
+                                    context.delete(task)
+                                    try? context.save()
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                                // FIX #39: change priority via swipe
+                                Button {
+                                    task.priority = task.priority == .high ? .low : .high
+                                    try? context.save()
+                                } label: {
+                                    Label("Priority", systemImage: "flag.fill")
+                                }
+                                .tint(FloColors.Hex.warning)
                             }
                         }
                     } header: {
@@ -132,6 +162,14 @@ struct TasksView: View {
                         ForEach(completedTasks) { task in
                             TaskRow(task: task) {
                                 vm.toggleComplete(task, context: context)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    context.delete(task)
+                                    try? context.save()
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
                             }
                         }
                     } header: {

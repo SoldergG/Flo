@@ -53,18 +53,49 @@ struct HabitsView: View {
         }
     }
 
+    @State private var editingHabit: Habit? // FIX #48
+
     private var habitsList: some View {
         ScrollView {
-            VStack(spacing: 16) {
+            VStack(spacing: 12) {
                 // Week header
                 weekHeader
 
-                // Habits
+                // FIX #49: streaks overview
+                if habits.contains(where: { $0.currentStreak > 0 }) {
+                    streakOverview
+                }
+
+                // Habits with swipe actions
                 ForEach(habits) { habit in
                     HabitCard(habit: habit) {
                         withAnimation(FloAnimations.springBouncy) {
                             vm.toggleCompletion(habit, context: context)
                         }
+                    }
+                    // FIX #50: swipe to edit
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            editingHabit = habit
+                        } label: {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        .tint(FloColors.Hex.accent)
+                    }
+                    // FIX #51: swipe to archive/delete
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            vm.deleteHabit(habit, context: context)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        Button {
+                            habit.isArchived = true
+                            try? context.save()
+                        } label: {
+                            Label("Archive", systemImage: "archivebox")
+                        }
+                        .tint(FloColors.Hex.textSecondary)
                     }
                 }
 
@@ -76,6 +107,35 @@ struct HabitsView: View {
             .padding(.horizontal, 20)
             .padding(.top, 12)
             .padding(.bottom, 100)
+        }
+        // FIX #52: edit habit sheet
+        .sheet(item: $editingHabit) { habit in
+            EditHabitSheet(habit: habit)
+        }
+    }
+
+    // FIX #53: streak overview card
+    private var streakOverview: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(habits.filter { $0.currentStreak > 0 }.sorted { $0.currentStreak > $1.currentStreak }.prefix(5)) { habit in
+                    VStack(spacing: 4) {
+                        Text(habit.icon == "dumbbell.fill" ? "🏋️" : "🔥")
+                            .font(.system(size: 18))
+                        Text("\(habit.currentStreak)")
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundStyle(FloColors.Hex.warning)
+                        Text(habit.name)
+                            .font(FloTypography.caption2)
+                            .foregroundStyle(FloColors.Hex.textTertiary)
+                            .lineLimit(1)
+                    }
+                    .frame(width: 64)
+                    .padding(.vertical, 8)
+                    .background(FloColors.Hex.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                }
+            }
         }
     }
 

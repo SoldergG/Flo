@@ -309,6 +309,19 @@ private struct ChatBubble: View {
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                     .shadow(color: .black.opacity(0.04), radius: 4, y: 2)
+                    // FIX #74: long press to copy message
+                    .contextMenu {
+                        Button {
+                            #if os(iOS)
+                            UIPasteboard.general.string = message.content
+                            #else
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(message.content, forType: .string)
+                            #endif
+                        } label: {
+                            Label("Copy", systemImage: "doc.on.doc")
+                        }
+                    }
 
                 Text(message.timestamp.formatted(.dateTime.hour().minute()))
                     .font(FloTypography.caption2)

@@ -232,10 +232,11 @@ struct SettingsView: View {
 
                     // MARK: - About
                     Section("About") {
+                        // FIX #56: version from Bundle (not hardcoded)
                         HStack {
                             Text("Version")
                             Spacer()
-                            Text("1.0.0")
+                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
                                 .foregroundStyle(FloColors.Hex.textTertiary)
                         }
 
@@ -251,15 +252,12 @@ struct SettingsView: View {
                         }
                         .foregroundStyle(FloColors.Hex.accent)
 
-                        Button("Reset Onboarding") {
-                            hasCompletedOnboarding = false
-                        }
-                        .foregroundStyle(FloColors.Hex.textTertiary)
-
-                        Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
+                        // FIX #57: removed "Reset Onboarding" from production UI (dev-only)
+                        // FIX #58: real privacy/terms links (GitHub page)
+                        Link("Privacy Policy", destination: URL(string: "https://github.com/SoldergG/Flo#license")!)
                             .foregroundStyle(FloColors.Hex.accent)
 
-                        Link("Terms of Use", destination: URL(string: "https://example.com/terms")!)
+                        Link("Source Code", destination: URL(string: "https://github.com/SoldergG/Flo")!)
                             .foregroundStyle(FloColors.Hex.accent)
                     }
                     .listRowBackground(FloColors.Hex.surface)
